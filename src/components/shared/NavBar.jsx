@@ -85,7 +85,7 @@ const NavBar = () => {
                             <div className="flex items-center gap-4">
                                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-800">
                                     <img
-                                        src={user.avatar || 'https://picsum.photos/seed/user/200'}
+                                        src={user.image || 'https://picsum.photos/seed/user/200'}
                                         alt={user.name}
                                         className="h-6 w-6 rounded-full object-cover ring-1 ring-amber-500/30"
                                     />
@@ -196,7 +196,7 @@ const NavBar = () => {
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-zinc-900/80 border border-zinc-800">
                                             <img
-                                                src={user.avatar || 'https://picsum.photos/seed/user/200'}
+                                                src={user.image || 'https://picsum.photos/seed/user/200'}
                                                 alt={user.name}
                                                 className="h-9 w-9 rounded-full object-cover ring-1 ring-amber-500/20"
                                             />

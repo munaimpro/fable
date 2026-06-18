@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { BookOpen, Compass, AlertCircle, ArrowRight, Sparkles, User, PenTool } from 'lucide-react';
+import { BookOpen, Compass, AlertCircle, ArrowRight, Sparkles, User, PenTool, ImageIcon } from 'lucide-react';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { authClient } from '@/lib/auth-client';
@@ -14,6 +14,7 @@ const RegisterPage = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        image: '',
         password: '',
         confirmPassword: '',
         role: 'user'
@@ -26,7 +27,7 @@ const RegisterPage = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
         setError('');
     };
-    
+
     console.log(formData.role);
 
     const handleRoleSelect = (role) => {
@@ -35,49 +36,10 @@ const RegisterPage = () => {
         console.log(formData.role);
     };
 
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-
-    //     const form = new FormData(event.currentTarget);
-    //     const user = Object.fromEntries(form.entries());
-
-    //     console.log(user);
-
-    //     if (!user.name || !user.email || !user.password || !user.confirmPassword) {
-    //         toast.error('Please fill in all registration fields.');
-    //         return;
-    //     }
-
-    //     if (user.password !== user.confirmPassword) {
-    //         toast.error('Passwords do not match.');
-    //         return;
-    //     }
-
-    //     const { data, error } = await authClient.signUp.email({
-    //         email: user.email,
-    //         password: user.password,
-    //         name: user.name,
-    //         role: formData.role,
-    //         image: user.image,
-    //         callbackURL: '/'
-    //     })
-
-    //     console.log(data, error);
-
-    //     if (data) {
-    //         toast.success(`Account created as ${formData.role}! Welcome to Fable.`);
-    //         router.push('/');
-    //     } else {
-    //         toast.error(error.message || 'Registration failed. Please check credentials.');
-    //     }
-    // };
-
-    // Simulated Google BetterAuth Login flow
-    
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const { name, email, password, confirmPassword, role } = formData;
+        const { name, email, image, password, confirmPassword, role } = formData;
 
         if (!name || !email || !password || !confirmPassword) {
             toast.error('Please fill in all registration fields.');
@@ -95,6 +57,7 @@ const RegisterPage = () => {
             email,
             password,
             name,
+            image,
             role,
             callbackURL: '/'
         });
@@ -210,6 +173,19 @@ const RegisterPage = () => {
                             />
                         </div>
 
+                        {/* Photo URL Field */}
+                        <div className="space-y-1.5">
+                            <label className="text-[10px] font-semibold text-zinc-400 uppercase tracking-widest font-mono">Profile Photo URL</label>
+                            <input
+                                type="url"
+                                name="image"
+                                value={formData.image}
+                                onChange={handleChange}
+                                placeholder="https://i.ibb.co/..."
+                                className="w-full rounded-lg bg-zinc-900 border border-zinc-800 px-3.5 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-500 transition-colors"
+                            />
+                        </div>
+
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-1.5">
                                 <label className="text-[10px] font-semibold text-zinc-400 uppercase tracking-widest font-mono">Password</label>
@@ -241,7 +217,7 @@ const RegisterPage = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full rounded-lg bg-gradient-to-r from-amber-500 to-orange-600 py-3 text-sm font-semibold text-zinc-950 shadow-md hover:opacity-95 transition flex items-center justify-center gap-1.5"
+                            className="w-full rounded-lg bg-gradient-to-r from-amber-500 to-orange-600 py-3 text-sm font-semibold text-zinc-950 shadow-md hover:opacity-95 transition flex items-center justify-center gap-1.5 cursor-pointer"
                         >
                             {loading ? (
                                 <div className="h-4.5 w-4.5 animate-spin rounded-full border-t-2 border-r-2 border-zinc-950 border-solid" />
