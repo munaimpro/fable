@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { BookOpen, Twitter, Linkedin, Send, Shield, Globe, HelpCircle, GitCommitHorizontalIcon } from 'lucide-react';
+import { BookOpen, Send, Shield, Globe, HelpCircle, GitCommitHorizontalIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const Footer = () => {
@@ -114,11 +114,11 @@ const Footer = () => {
                 </div>
 
                 {/* Bottom Banner */}
-                {/* <div className="border-t border-zinc-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="border-t border-zinc-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-xs text-zinc-500 font-normal">
                         &copy; {new Date().getFullYear()} Fable Books Inc. All rights reserved. Built with precision and passion.
                     </p>
-                    <div className="flex gap-4">
+                    {/* <div className="flex gap-4">
                         <a href="#" className="text-zinc-500 hover:text-amber-400 transition-colors" aria-label="Github link">
                             <GitCommitHorizontalIcon className="w-4.5 h-4.5" />
                         </a>
@@ -128,8 +128,8 @@ const Footer = () => {
                         <a href="#" className="text-zinc-500 hover:text-amber-400 transition-colors" aria-label="LinkedIn link">
                             <Linkedin className="w-4.5 h-4.5" />
                         </a>
-                    </div>
-                </div> */}
+                    </div> */}
+                </div>
             </div>
         </footer>
     );
