@@ -120,8 +120,9 @@ const LoginPage = () => {
                             <label className="text-[10px] font-semibold text-zinc-400 uppercase tracking-widest font-mono">Email Address</label>
                             <input
                                 type="email"
+                                name="email"
                                 value={email}
-                                onChange={(e) => { setEmail(e.target.value); setError(''); }}
+                                onChange={(event) => { setEmail(event.target.value); setError(''); }}
                                 placeholder="admin@fable.com"
                                 required
                                 className="w-full rounded-lg bg-zinc-900 border border-zinc-800 px-3.5 py-2 text-sm text-zinc-100 placeholder:text-zinc-650 focus:outline-none focus:border-amber-500 transition-colors"
@@ -135,8 +136,9 @@ const LoginPage = () => {
                             <div className="relative">
                                 <input
                                     type={showPassword ? 'text' : 'password'}
+                                    name='password'
                                     value={password}
-                                    onChange={(e) => { setPassword(e.target.value); setError(''); }}
+                                    onChange={(event) => { setPassword(event.target.value); setError(''); }}
                                     placeholder="******"
                                     required
                                     className="w-full rounded-lg bg-zinc-900 border border-zinc-800 pl-3.5 pr-10 py-2 text-sm text-zinc-100 placeholder:text-zinc-650 focus:outline-none focus:border-amber-500 transition-colors"

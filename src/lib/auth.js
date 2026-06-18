@@ -29,6 +29,16 @@ export const auth = betterAuth({
             maxAge: 24 * 60 * 60
         }
     },
+    user: {
+        additionalFields: {
+            role: {
+                type: "string",
+                required: false,
+                defaultValue: "user",
+                input: true // This allows the client side to pass it during sign up!
+            }
+        }
+    },
     plugins: [
         jwt()
     ]
