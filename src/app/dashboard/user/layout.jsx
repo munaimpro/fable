@@ -5,8 +5,6 @@ import { useRouter, usePathname } from 'next/navigation';
 // import { useAuth } from '@/context/AuthContext';
 import { BookOpen, User, Heart, History } from 'lucide-react';
 import { toast } from 'react-hot-toast';
-import Footer from '@/components/shared/Footer';
-import NavBar from '@/components/shared/NavBar';
 import { authClient } from '@/lib/auth-client';
 
 const UserDashboardContext = createContext(null);
@@ -75,8 +73,7 @@ export default function UserDashboardLayout({ children }) {
     }
 
     const sidebarLinks = [
-        { name: 'Dashboard', href: '/dashboard/user', icon: BookOpen },
-        { name: 'Saved Ebooks', href: '/dashboard/user/library', icon: BookOpen },
+        { name: 'Purchased Ebooks', href: '/dashboard/user/purchased-ebooks', icon: BookOpen },
         { name: 'Purchase History', href: '/dashboard/user/purchase-history', icon: History },
         { name: 'Bookmarked List', href: '/dashboard/user/bookmarks', icon: Heart },
         { name: 'My Profile', href: '/dashboard/user/profile', icon: User },
