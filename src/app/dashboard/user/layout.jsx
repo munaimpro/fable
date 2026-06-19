@@ -44,10 +44,10 @@ export default function UserDashboardLayout({ children }) {
         async function loadDashboardData() {
             setDataLoading(true);
             try {
-                const bmRes = await fetch('/api/bookmarks');
-                if (bmRes.ok) {
-                    const bmData = await bmRes.json();
-                    setBookmarks(bmData);
+                const bookMarks = await fetch(`/${process.env.NEXT_PUBLIC_SERVER_URL}/bookmarks`);
+                if (bookMarks.ok) {
+                    const bookMarksData = await bookMarks.json();
+                    setBookmarks(bookMarksData);
                 }
 
                 const seededPurchaslist = [];
@@ -74,7 +74,7 @@ export default function UserDashboardLayout({ children }) {
     const sidebarLinks = [
         { name: 'Dashboard', href: '/dashboard/user', icon: BookOpen },
         { name: 'Saved Ebooks', href: '/dashboard/user/library', icon: BookOpen },
-        { name: 'Purchase History', href: '/dashboard/user/history', icon: History },
+        { name: 'Purchase History', href: '/dashboard/user/purchase-history', icon: History },
         { name: 'Bookmarked List', href: '/dashboard/user/bookmarks', icon: Heart },
         { name: 'My Profile', href: '/dashboard/user/profile', icon: User },
     ];
