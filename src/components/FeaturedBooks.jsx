@@ -24,7 +24,7 @@ const FeaturedBooks = ({ ebooks = [], loading }) => {
                         </p>
                     </div>
                     <Link
-                        href="/browse"
+                        href="/all-ebooks"
                         className="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-500 hover:text-amber-400 group transition-colors"
                     >
                         <span>Browse entire collection</span>
@@ -74,16 +74,16 @@ const FeaturedBooks = ({ ebooks = [], loading }) => {
                                 className="flex flex-col rounded-xl overflow-hidden bg-zinc-900/20 border border-zinc-900/80 hover:border-zinc-800/80 transition-all duration-300 relative group h-full"
                             >
                                 {/* Badge */}
-                                {book.status === 'sold' && (
+                                {book.totalSales > 0 && (
                                     <div className="absolute top-2 right-2 z-10 rounded bg-red-950/80 border border-red-500/30 px-2 py-0.5 text-[9px] font-mono tracking-widest font-bold text-red-400 uppercase">
                                         Sold out
                                     </div>
                                 )}
 
                                 {/* Thumbnail Cover */}
-                                <Link href={`/ebook/${book.id}`} className="aspect-[3/4] relative block w-full bg-zinc-950 overflow-hidden">
+                                <Link href={`/ebook/${book._id}`} className="aspect-[3/4] relative block w-full bg-zinc-950 overflow-hidden">
                                     <img
-                                        src={book.cover || 'https://picsum.photos/seed/cover/600/800'}
+                                        src={book.coverImage || 'https://picsum.photos/seed/cover/600/800'}
                                         alt={book.title}
                                         className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
                                     />

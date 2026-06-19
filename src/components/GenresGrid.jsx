@@ -35,7 +35,7 @@ export default function GenresGrid() {
                     {GENRES.map((g, idx) => (
                         <Link
                             key={idx}
-                            href={`/browse?genre=${g.name}`}
+                            href={`/all-ebooks?genre=${g.name}`}
                             className={`rounded-2xl border ${g.border} bg-gradient-to-br ${g.bg} p-6 flex flex-col justify-between aspect-square group hover:scale-[1.02] hover:-rotate-1 transition-all duration-300`}
                         >
                             <div className={`p-2 rounded-xl bg-zinc-950/40 w-fit ${g.text}`}>
