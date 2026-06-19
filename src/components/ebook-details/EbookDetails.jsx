@@ -13,6 +13,8 @@ export default function EbookDetails({ id }) {
     // Getting user data from session
     const { data: session } = authClient.useSession();
     const user = session?.user;
+    
+    console.log(user);
 
     const [book, setBook] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -38,10 +40,12 @@ export default function EbookDetails({ id }) {
 
                 // Check if user is logged in
                 if (user) {
-                    const bookMarkResponse = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookmarks`);
+                    const bookMarkResponse = await fetch(
+                        `${process.env.NEXT_PUBLIC_SERVER_URL}/bookmarks/${user.id}`
+                    );
                     if (bookMarkResponse.ok) {
                         const bookMarks = await bookMarkResponse.json();
-                        setIsBookmarked(bookMarks.some(b => b.id === id));
+                        setIsBookmarked(bookMarks.some(bookmark => bookmark.ebookId === id));
                     }
                 }
             } catch (err) {
@@ -67,7 +71,7 @@ export default function EbookDetails({ id }) {
             const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookmarks`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ebookId: id }),
+                body: JSON.stringify({ ebookId: id, userId: user.id }),
             });
 
             if (response.ok) {
