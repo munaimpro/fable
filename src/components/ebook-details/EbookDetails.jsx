@@ -13,7 +13,6 @@ export default function EbookDetails({ id }) {
     // Getting user data from session
     const { data: session } = authClient.useSession();
     const user = session?.user;
-    
     console.log(user);
 
     const [book, setBook] = useState(null);
