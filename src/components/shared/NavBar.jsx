@@ -28,7 +28,7 @@ const NavBar = () => {
 
     const navLinks = [
         { name: 'Home', href: '/', icon: Home },
-        { name: 'Browse Ebooks', href: '/browse', icon: Compass },
+        { name: 'Browse Ebooks', href: '/all-ebooks', icon: Compass },
         ...(user ? [{ name: 'Dashboard', href: getDashboardLink(), icon: LayoutDashboard }] : []),
     ];
 
@@ -63,7 +63,7 @@ const NavBar = () => {
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className={`relative text-sm font-medium transition-colors py-1.5 px-3 rounded-md hover:text-amber-400 ${isActive ? 'text-amber-400 bg-zinc-900/50' : 'text-zinc-400'
+                                    className={`relative text-sm font-medium transition-colors py-1.5 px-3 rounded-md hover:text-amber-400 ${isActive ? 'text-amber-400' : 'text-zinc-400'
                                         }`}
                                 >
                                     {link.name}
@@ -156,7 +156,7 @@ const NavBar = () => {
                             animate={{ x: 0 }}
                             exit={{ x: '100%' }}
                             transition={{ type: 'spring', damping: 28, stiffness: 240 }}
-                            className="fixed inset-y-0 right-0 z-[9999] w-full bg-zinc-950/80 backdrop-blur-md p-6 shadow-2xl flex flex-col md:hidden"
+                            className="fixed inset-y-0 right-0 z-[9999] w-full bg-zinc-950 backdrop-blur-md p-6 shadow-2xl flex flex-col md:hidden h-fit overflow-hidden"
                         >
                             <div className="flex items-center justify-between pb-6 border-b border-zinc-900">
                                 <span className="font-sans text-lg font-bold tracking-tight bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
