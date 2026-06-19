@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-// import { useAuth } from '@/context/AuthContext';
 import { BookOpen, User, Heart, History } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { authClient } from '@/lib/auth-client';

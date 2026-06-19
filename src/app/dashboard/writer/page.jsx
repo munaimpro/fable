@@ -3,11 +3,11 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-export default function UserDashboardHome() {
+export default function WriterDashboardHome() {
     const router = useRouter();
 
     useEffect(() => {
-        router.replace('/dashboard/user/purchased-ebooks');
+        router.replace('/dashboard/writer/manage');
     }, [router]);
 
     return (
