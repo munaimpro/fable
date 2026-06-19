@@ -22,7 +22,7 @@ export default function UserDashboardLayout({ children }) {
     // Getting user data from session
     const { data: session } = authClient.useSession();
     const user = session?.user;
-    console.log(user);
+    // console.log(user);
 
 
 
@@ -39,14 +39,17 @@ export default function UserDashboardLayout({ children }) {
 
     useEffect(() => {
         if (!user) return;
-        const currentUser = user;
 
         async function loadDashboardData() {
             setDataLoading(true);
             try {
-                const bookMarks = await fetch(`/${process.env.NEXT_PUBLIC_SERVER_URL}/bookmarks`);
+                const bookMarks = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookmarks/${user.id}`);
+                
+                // console.log(bookMarks);
+
                 if (bookMarks.ok) {
                     const bookMarksData = await bookMarks.json();
+                    // console.log(bookMarksData);
                     setBookmarks(bookMarksData);
                 }
 

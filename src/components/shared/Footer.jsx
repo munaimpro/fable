@@ -47,17 +47,17 @@ const Footer = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/browse" className="text-sm text-zinc-400 hover:text-amber-400 transition-colors">
+                                <Link href="/all-ebooks" className="text-sm text-zinc-400 hover:text-amber-400 transition-colors">
                                     Browse Ebooks
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/browse?genre=Sci-Fi" className="text-sm text-zinc-400 hover:text-amber-400 transition-colors">
+                                <Link href="/all-ebooks?genre=Sci-Fi" className="text-sm text-zinc-400 hover:text-amber-400 transition-colors">
                                     Sci-Fi & Fantasy
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/browse?genre=Mystery" className="text-sm text-zinc-400 hover:text-amber-400 transition-colors">
+                                <Link href="/all-ebooks?genre=Mystery" className="text-sm text-zinc-400 hover:text-amber-400 transition-colors">
                                     Mysteries
                                 </Link>
                             </li>

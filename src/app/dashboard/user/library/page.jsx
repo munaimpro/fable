@@ -27,7 +27,7 @@ export default function SavedEbooksPage() {
                 <div className="text-center py-16 border border-dashed border-zinc-800 rounded-2xl bg-zinc-900/10 space-y-3">
                     <BookOpen className="w-8 h-8 text-zinc-700 mx-auto" />
                     <p className="text-xs text-zinc-400">You haven&apos;t unlocked any ebook common copies yet.</p>
-                    <Link href="/browse" className="inline-flex items-center gap-1.5 px-4 py-2 bg-amber-500 text-zinc-950 font-semibold text-xs rounded-lg hover:bg-amber-400">
+                    <Link href="/all-ebooks" className="inline-flex items-center gap-1.5 px-4 py-2 bg-amber-500 text-zinc-950 font-semibold text-xs rounded-lg hover:bg-amber-400">
                         Browse Ebooks
                     </Link>
                 </div>

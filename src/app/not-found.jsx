@@ -35,7 +35,7 @@ const NotFoundPage = () => {
                         </Link>
 
                         <Link
-                            href="/browse"
+                            href="/all-ebooks"
                             className="rounded-lg bg-zinc-900 border border-zinc-800 px-5 py-2.5 text-xs font-semibold text-zinc-300 hover:text-white"
                         >
                             <span>Explore Ebooks</span>

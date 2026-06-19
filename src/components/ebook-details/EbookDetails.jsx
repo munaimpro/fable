@@ -13,7 +13,7 @@ export default function EbookDetails({ id }) {
     // Getting user data from session
     const { data: session } = authClient.useSession();
     const user = session?.user;
-    console.log(user);
+    // console.log(user);
 
     const [book, setBook] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -123,7 +123,7 @@ export default function EbookDetails({ id }) {
                     <p className="text-xs text-zinc-400 max-w-sm">
                         The manuscript with index &quot;{id}&quot; could not be located inside our digital registry.
                     </p>
-                    <Link href="/browse" className="rounded-lg bg-zinc-900 border border-zinc-800 px-4 py-2 text-xs font-semibold hover:border-zinc-700">
+                    <Link href="/all-ebooks" className="rounded-lg bg-zinc-900 border border-zinc-800 px-4 py-2 text-xs font-semibold hover:border-zinc-700">
                         Return to Browse
                     </Link>
                 </div>
@@ -142,7 +142,7 @@ export default function EbookDetails({ id }) {
             <main className="flex-grow mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 w-full space-y-12">
 
                 {/* Back Link */}
-                <Link href="/browse" className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-500 hover:text-amber-500 transition-colors">
+                <Link href="/all-ebooks" className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-500 hover:text-amber-500 transition-colors">
                     <Compass className="w-4 h-4" />
                     <span>Catalog Commons</span>
                 </Link>

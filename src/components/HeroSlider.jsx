@@ -12,7 +12,7 @@ const SLIDES = [
         tag: "FEATURED WORKSPACE INDIES",
         image: "https://picsum.photos/seed/curated/1200/500",
         cta: "Explore Library",
-        link: "/browse"
+        link: "/all-ebooks"
     },
     {
         title: "Empowering emerging writers globally.",
@@ -28,7 +28,7 @@ const SLIDES = [
         tag: "AUTHENTIC DIGITAL EDITIONS",
         image: "https://picsum.photos/seed/editions/1200/500",
         cta: "Browse Genres",
-        link: "/browse"
+        link: "/all-ebooks"
     }
 ];
 
@@ -117,7 +117,7 @@ export default function HeroSlider() {
                                                 {slide.cta}
                                             </Link>
                                             <Link
-                                                href="/browse"
+                                                href="/all-ebooks"
                                                 className="rounded-lg bg-zinc-900 border border-zinc-800 px-6 py-3 text-sm font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800/80 transition-all"
                                             >
                                                 Explore Ebooks
