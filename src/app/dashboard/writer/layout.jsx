@@ -62,7 +62,7 @@ export default function WriterDashboardLayout({ children }) {
                 }
 
                 // 2. Bookmarks
-                const bookMarks = await fetch('/api/bookmarks');
+                const bookMarks = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookmarks/${user.id}`);
                 if (bookMarks.ok && active) {
                     const bookMarksData = await bookMarks.json();
                     setBookmarks(bookMarksData);
