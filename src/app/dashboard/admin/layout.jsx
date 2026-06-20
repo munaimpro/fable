@@ -25,6 +25,7 @@ export default function AdminDashboardLayout({ children }) {
     const [userList, setUserList] = useState([]);
     const [bookList, setBookList] = useState([]);
     const [analytics, setAnalytics] = useState(null);
+    const [transactionList, setTransactionList] = useState(null);
     const [dataLoading, setDataLoading] = useState(true);
 
     useEffect(() => {
@@ -38,9 +39,9 @@ export default function AdminDashboardLayout({ children }) {
         setDataLoading(true);
         try {
             // 1. Load analytical metrics
-            const analyticalRes = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/analytics`);
-            if (analyticalRes.ok) {
-                const analyticalData = await analyticalRes.json();
+            const analyticalResponse = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/analytics`);
+            if (analyticalResponse.ok) {
+                const analyticalData = await analyticalResponse.json();
                 setAnalytics(analyticalData);
             }
 
@@ -53,10 +54,18 @@ export default function AdminDashboardLayout({ children }) {
             }
 
             // 3. Load all books
-            const booksRes = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ebooks`);
-            if (booksRes.ok) {
-                const bData = await booksRes.json();
-                setBookList(bData.ebooks || []);
+            const booksResponse = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/allebooks`);
+            if (booksResponse.ok) {
+                const bookData = await booksResponse.json();
+                setBookList(bookData || []);
+            }
+
+            // 4. Load all transactions
+            const transactionsResponse = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/transactions`);
+            if (transactionsResponse.ok) {
+                const transactionData = await transactionsResponse.json();
+                console.log(transactionData);
+                setTransactionList(transactionData || []);
             }
         } catch (err) {
             console.error('Loading admin metrics failed:', err);
@@ -92,6 +101,7 @@ export default function AdminDashboardLayout({ children }) {
             }
         } catch (err) {
             toast.error('Server integration error.');
+            console.log(err)
         }
     };
 
@@ -105,13 +115,13 @@ export default function AdminDashboardLayout({ children }) {
         if (!window.confirm('Delete this user account permanently? This action is irreversible.')) return;
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users?userId=${targetUserId}`, { method: 'DELETE' });
-            if (res.ok) {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/${targetUserId}`, { method: 'DELETE' });
+            if (response.ok) {
                 toast.success('Account detached from registry.');
                 setUserList(userList.filter(u => u.id !== targetUserId));
                 loadAdminDatabase();
             } else {
-                const data = await res.json();
+                const data = await response.json();
                 toast.error(data.error || 'Deletion rejected.');
             }
         } catch (err) {
@@ -135,9 +145,25 @@ export default function AdminDashboardLayout({ children }) {
                 }),
             });
 
+            const newPublishStatus = book.status === "published"? "unpublished" : "published";
+
             if (response.ok) {
-                toast.success(`Ebook ${!book.isPublished ? 'released' : 'retracted'} successfully!`);
-                setBookList(bookList.map(b => b.id === book.id ? { ...b, isPublished: !book.isPublished } : b));
+                setBookList(prev =>
+                    prev.map(b =>
+                        b._id === book._id
+                            ? {
+                                ...b,
+                                status: newPublishStatus
+                            }
+                            : b
+                    )
+                );
+
+                toast.success(
+                    newStatus === "published"
+                        ? "Ebook published successfully!"
+                        : "Ebook unpublished successfully!"
+                );
             } else {
                 toast.error('Ebook modifier rejected.');
             }
@@ -151,10 +177,10 @@ export default function AdminDashboardLayout({ children }) {
         if (!window.confirm('Erase this book globally from Fable libraries?')) return;
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${id}`, { method: 'DELETE' });
+            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${bookId}`, { method: 'DELETE' });
             if (response.ok) {
                 toast.success('Ebook deleted.');
-                setBookList(userList.filter(b => b.id !== bookId));
+                setBookList(bookList.filter(b => b.id !== bookId));
                 loadAdminDatabase();
             } else {
                 toast.error('Delete rejected.');
@@ -185,6 +211,7 @@ export default function AdminDashboardLayout({ children }) {
             userList,
             bookList,
             analytics,
+            transactionList,
             dataLoading,
             handleUpdateRole,
             handleDeleteUser,
@@ -200,14 +227,6 @@ export default function AdminDashboardLayout({ children }) {
                         <div className="space-y-1 text-center sm:text-left">
                             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">Administrative Ledger</h1>
                             <p className="text-xs text-zinc-500 font-sans">Full operational authority over Users, Publications, and Transaction receipts.</p>
-                        </div>
-
-                        <div className="flex bg-zinc-900/40 p-2.5 rounded-xl border border-zinc-900 text-xs gap-3">
-                            <span className="flex items-center gap-1.5 font-mono uppercase text-zinc-400 font-bold tracking-widest text-[9.5px]">
-                                <Landmark className="w-4 h-4 text-amber-500" />
-                                <span>Vault Secure:</span>
-                                <span className="text-emerald-400">Online</span>
-                            </span>
                         </div>
                     </div>
 

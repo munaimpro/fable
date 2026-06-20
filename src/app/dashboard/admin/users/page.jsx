@@ -38,7 +38,7 @@ export default function AdminUsersPage() {
                     </thead>
                     <tbody className="divide-y divide-zinc-900">
                         {userList.map((item) => (
-                            <tr key={item.id} className="hover:bg-zinc-900/30 text-zinc-300">
+                            <tr key={item._id} className="hover:bg-zinc-900/30 text-zinc-300">
                                 <td className="p-4">
                                     <img src={item.image} alt={item.name} className="h-8 w-8 rounded-full object-cover border border-zinc-800" />
                                 </td>
@@ -58,7 +58,7 @@ export default function AdminUsersPage() {
                                     {item.id !== user?.id ? (
                                         <select
                                             value={item.role}
-                                            onChange={(e) => handleUpdateRole(item.id, e.target.value)}
+                                            onChange={(e) => handleUpdateRole(item._id, e.target.value)}
                                             className="bg-zinc-900 border border-zinc-800 text-[11px] rounded px-2 py-1 text-zinc-300 focus:outline-none focus:border-amber-500"
                                         >
                                             <option value="user">Reader (user)</option>
@@ -72,7 +72,7 @@ export default function AdminUsersPage() {
                                 <td className="p-4 text-right">
                                     {item.id !== user?.id ? (
                                         <button
-                                            onClick={() => handleDeleteUser(item.id)}
+                                            onClick={() => handleDeleteUser(item._id)}
                                             className="p-1.5 rounded-lg border border-zinc-850 hover:bg-rose-950/20 hover:text-rose-500 hover:border-rose-500/30 transition text-zinc-500"
                                         >
                                             <Trash2 className="w-3.5 h-3.5" />
