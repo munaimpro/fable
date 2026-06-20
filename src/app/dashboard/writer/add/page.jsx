@@ -56,10 +56,19 @@ export default function AddOrEditEbookPage() {
             const method = editingBookId ? 'PUT' : 'POST';
             const endpoint = editingBookId ? `${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${editingBookId}` : `${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/`;
 
+            const payload = {
+                ...bookForm,
+                writerId: user.id,
+                writerName: user.name,
+                status: "unpublished",
+            };
+
+            console.log(payload)
+
             const res = await fetch(endpoint, {
                 method,
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(bookForm),
+                body: JSON.stringify(payload),
             });
 
             const data = await res.json();

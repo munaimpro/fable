@@ -60,9 +60,9 @@ export default function ManageMyEbooksPage() {
         if (!window.confirm('Are you sure you want to delete this ebook from Fable registry?')) return;
 
         try {
-            const res = await fetch(`/api/ebooks/${id}`, { method: 'DELETE' });
-            if (res.ok) {
-                toast.success('Manuscript deleted from registry.');
+            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${id}`, { method: 'DELETE' });
+            if (response.ok) {
+                toast.success('Book deleted from registry.');
                 setMyEbooks(myEbooks.filter(b => b.id !== id));
             } else {
                 toast.error('Delete action rejected.');

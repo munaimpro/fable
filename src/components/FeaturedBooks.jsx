@@ -114,7 +114,7 @@ const FeaturedBooks = ({ ebooks = [], loading }) => {
                                             Copy Price
                                         </span>
                                         <span className="text-sm font-bold text-amber-400 font-mono">
-                                            ${book.price ? book.price.toFixed(2) : '0.00'}
+                                            ${book.price ? book.price : '0.00'}
                                         </span>
                                     </div>
                                 </div>
