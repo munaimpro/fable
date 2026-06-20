@@ -68,23 +68,15 @@ export default function WriterDashboardLayout({ children }) {
                     setBookmarks(bookMarksData);
                 }
 
-                // 3. Populate realistic sales records matching Jane Writer seed data
-                const listSales = [];
-                if (user.email === 'writer@fable.com' && active) {
-                    listSales.push({
-                        id: 'p-sale-1',
-                        ebookId: 'b-5',
-                        ebookTitle: 'Echoes in the Dark',
-                        buyerName: 'John Reader',
-                        price: 9.99,
-                        createdAt: new Date('2026-06-10T15:30:00Z').toISOString(),
-                    });
+                // 3. Sales List
+                const salseList = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/purchases/${user.id}`);
+                if (salseList.ok && active) {
+                    const salseListData = await salseList.json();
+                    console.log(salseListData);
+                    setSales(salseListData);
                 }
-                if (active) {
-                    setSales(listSales);
-                }
-            } catch (err) {
-                console.error('Loading writer records failure:', err);
+            } catch (error) {
+                console.error('Loading writer records failure:', error);
             } finally {
                 if (active) {
                     setDataLoading(false);
@@ -161,7 +153,7 @@ export default function WriterDashboardLayout({ children }) {
                             <div className="text-center sm:text-right">
                                 <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-wider">Creator Royalties</p>
                                 <p className="text-lg font-bold text-amber-500 font-mono">
-                                    ${sales.reduce((sum, s) => sum + s.price, 0).toFixed(2)}
+                                    ${sales.reduce((sum, s) => sum + s.price, 0)}
                                 </p>
                             </div>
                         </div>

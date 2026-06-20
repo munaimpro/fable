@@ -27,7 +27,7 @@ export default function AddOrEditEbookPage() {
         genre: 'Fiction',
         coverImage: ''
     };
-    console.log(bookForm);
+    // console.log(bookForm);
     const setBookForm = context?.setBookForm || (() => { });
     const loadWriterStats = context?.loadWriterStats || (() => { });
 
