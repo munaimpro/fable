@@ -57,7 +57,7 @@ export default function ManageMyEbooksPage() {
 
     // Delete Ebook
     const handleDeleteBook = async (id) => {
-        if (!window.confirm('Are you sure you want to delete this ebook from Fable registry?')) return;
+        if (!window.confirm('Are you sure you want to delete this book from Fable registry?')) return;
 
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${id}`, { method: 'DELETE' });
