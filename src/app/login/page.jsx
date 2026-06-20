@@ -97,7 +97,7 @@ const LoginPage = () => {
                                     key={idx}
                                     type="button"
                                     onClick={() => handlePreFill(acc)}
-                                    className="flex flex-col items-center justify-center p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800/80 border border-zinc-850 text-center hover:border-amber-500/30 transition duration-200"
+                                    className="cursor-pointer flex flex-col items-center justify-center p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800/80 border border-zinc-850 text-center hover:border-amber-500/30 transition duration-200"
                                 >
                                     <span className="text-[10.5px] font-bold text-zinc-200">{acc.label}</span>
                                     <span className="text-[9px] text-amber-500 font-mono font-semibold uppercase tracking-wider mt-0.5">{acc.role}</span>
@@ -146,7 +146,7 @@ const LoginPage = () => {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition"
+                                    className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition"
                                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                                 >
                                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -157,7 +157,7 @@ const LoginPage = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full rounded-lg bg-gradient-to-r from-amber-500 to-orange-600 py-3 text-sm font-semibold text-zinc-950 shadow-md hover:opacity-95 transition flex items-center justify-center gap-1.5"
+                            className="cursor-pointer w-full rounded-lg bg-gradient-to-r from-amber-500 to-orange-600 py-3 text-sm font-semibold text-zinc-950 shadow-md hover:opacity-95 transition flex items-center justify-center gap-1.5"
                         >
                             {loading ? (
                                 <div className="h-4.5 w-4.5 animate-spin rounded-full border-t-2 border-r-2 border-zinc-950 border-solid" />
@@ -182,7 +182,7 @@ const LoginPage = () => {
                     <button
                         onClick={handleGoogleLogin}
                         type="button"
-                        className="w-full py-2.5 rounded-lg bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-zinc-700 text-sm font-semibold text-zinc-200 transition flex items-center justify-center gap-2"
+                        className="cursor-pointer w-full py-2.5 rounded-lg bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-zinc-700 text-sm font-semibold text-zinc-200 transition flex items-center justify-center gap-2"
                     >
                         <svg className="h-4 w-4 bg-transparent fill-current shrink-0" viewBox="0 0 24 24">
                             <path d="M12.24 10.285V13.4h6.887C18.2 15.614 15.645 18 12.24 18c-3.86 0-7-3.14-7-7s3.14-7 7-7c1.71 0 3.27.614 4.5 1.636l2.455-2.455C17.482 1.91 15.014 1 12.24 1 6.586 1 2 5.586 2 11.24s4.586 10.24 10.24 10.24c5.905 0 9.818-4.145 9.818-10 0-.6-.055-1.186-.164-1.745H12.24z" />

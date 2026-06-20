@@ -19,6 +19,7 @@ export default function WriterDashboardLayout({ children }) {
     // Getting user data from session
     const { data: session } = authClient.useSession();
     const user = session?.user;
+    console.log(user);
 
     const [myEbooks, setMyEbooks] = useState([]);
     const [sales, setSales] = useState([]);
@@ -53,19 +54,18 @@ export default function WriterDashboardLayout({ children }) {
             setDataLoading(true);
             try {
                 // 1. Load eBooks
-                const booksRes = await fetch('/api/ebooks');
-                if (booksRes.ok && active) {
-                    const booksData = await booksRes.json();
-                    const allBooks = booksData.ebooks || [];
-                    const myUploaded = allBooks.filter(b => b.writerId === user.id);
+                const booksResponse = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/writer-ebooks/${user.id}`);
+                if (booksResponse.ok && active) {
+                    const myUploaded = await booksResponse.json();
+                    console.log(myUploaded);
                     setMyEbooks(myUploaded);
                 }
 
                 // 2. Bookmarks
-                const bmRes = await fetch('/api/bookmarks');
-                if (bmRes.ok && active) {
-                    const bms = await bmRes.json();
-                    setBookmarks(bms);
+                const bookMarks = await fetch('/api/bookmarks');
+                if (bookMarks.ok && active) {
+                    const bookMarksData = await bookMarks.json();
+                    setBookmarks(bookMarksData);
                 }
 
                 // 3. Populate realistic sales records matching Jane Writer seed data
@@ -139,7 +139,7 @@ export default function WriterDashboardLayout({ children }) {
                     <div className="flex flex-col sm:flex-row items-center gap-5 bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-900 rounded-3xl p-6 sm:p-8 justify-between">
                         <div className="flex items-center gap-4 text-center sm:text-left flex-col sm:flex-row">
                             <img
-                                src={user?.avatar || 'https://picsum.photos/seed/user/200'}
+                                src={user?.image || 'https://picsum.photos/seed/user/200'}
                                 alt={user?.name || 'Writer'}
                                 className="h-16 w-16 rounded-full object-cover ring-2 ring-amber-500/20"
                             />
