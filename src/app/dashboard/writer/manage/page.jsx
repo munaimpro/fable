@@ -74,14 +74,14 @@ export default function ManageMyEbooksPage() {
 
     // Pre-fill Edit form and route to add page
     const handleStartEdit = (book) => {
-        setEditingBookId(book.id);
+        setEditingBookId(book._id);
         setBookForm({
             title: book.title,
             description: book.description,
-            content: book.content,
+            fullContent: book.fullContent,
             price: book.price.toString(),
             genre: book.genre,
-            cover: book.cover
+            coverImage: book.coverImage
         });
         router.push('/dashboard/writer/add');
     };
@@ -125,7 +125,7 @@ export default function ManageMyEbooksPage() {
                                     <td className="p-4">
                                         <span className="bg-zinc-900 text-zinc-400 px-2 py-0.5 rounded text-[10px] font-mono">{book.genre}</span>
                                     </td>
-                                    <td className="p-4 font-mono font-bold text-amber-500">${book.price.toFixed(2)}</td>
+                                    <td className="p-4 font-mono font-bold text-amber-500">${book.price}</td>
                                     <td className="p-4 font-semibold uppercase text-[10px] font-mono">
                                         <span className={book.status === 'published' ? 'text-emerald-400' : 'text-red-400'}>
                                             {book.status}

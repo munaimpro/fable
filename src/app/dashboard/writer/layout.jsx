@@ -19,7 +19,7 @@ export default function WriterDashboardLayout({ children }) {
     // Getting user data from session
     const { data: session } = authClient.useSession();
     const user = session?.user;
-    console.log(user);
+    // console.log(user);
 
     const [myEbooks, setMyEbooks] = useState([]);
     const [sales, setSales] = useState([]);
@@ -32,10 +32,10 @@ export default function WriterDashboardLayout({ children }) {
     const [bookForm, setBookForm] = useState({
         title: '',
         description: '',
-        content: '',
+        fullContent: '',
         price: '9.99',
         genre: 'Fiction',
-        cover: ''
+        coverImage: ''
     });
 
     useEffect(() => {
@@ -57,7 +57,7 @@ export default function WriterDashboardLayout({ children }) {
                 const booksResponse = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/writer-ebooks/${user.id}`);
                 if (booksResponse.ok && active) {
                     const myUploaded = await booksResponse.json();
-                    console.log(myUploaded);
+                    // console.log(myUploaded);
                     setMyEbooks(myUploaded);
                 }
 

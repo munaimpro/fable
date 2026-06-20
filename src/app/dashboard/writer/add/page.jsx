@@ -3,6 +3,8 @@
 import React from 'react';
 import { useWriterDashboard } from '../layout';
 import { useRouter } from 'next/navigation';
+import { authClient } from '@/lib/auth-client';
+import toast from 'react-hot-toast';
 
 const GENRE_LIST = ['Fiction', 'Mystery', 'Romance', 'Sci-Fi', 'Fantasy', 'Horror'];
 
@@ -20,11 +22,12 @@ export default function AddOrEditEbookPage() {
     const bookForm = context?.bookForm || {
         title: '',
         description: '',
-        content: '',
+        fullContent: '',
         price: '9.99',
         genre: 'Fiction',
-        cover: ''
+        coverImage: ''
     };
+    console.log(bookForm);
     const setBookForm = context?.setBookForm || (() => { });
     const loadWriterStats = context?.loadWriterStats || (() => { });
 
@@ -34,24 +37,24 @@ export default function AddOrEditEbookPage() {
         setBookForm({
             title: '',
             description: '',
-            content: '',
+            fullContent: '',
             price: '9.99',
             genre: 'Fiction',
-            cover: ''
+            coverImage: ''
         });
     };
 
     // Submit book creation or modification
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        if (!bookForm.title || !bookForm.description || !bookForm.content || !bookForm.price) {
+        if (!bookForm.title || !bookForm.description || !bookForm.fullContent || !bookForm.price || !bookForm.coverImage) {
             toast.error('Please prefill all writing criteria.');
             return;
         }
 
         try {
             const method = editingBookId ? 'PUT' : 'POST';
-            const endpoint = editingBookId ? `/api/ebooks/${editingBookId}` : '/api/ebooks';
+            const endpoint = editingBookId ? `${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${editingBookId}` : `${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/`;
 
             const res = await fetch(endpoint, {
                 method,
@@ -135,8 +138,8 @@ export default function AddOrEditEbookPage() {
                         <label className="text-[10px] font-mono tracking-wider text-zinc-500 uppercase">Cover Art Thumbnail URL (Optional)</label>
                         <input
                             type="url"
-                            value={bookForm.cover}
-                            onChange={(e) => setBookForm({ ...bookForm, cover: e.target.value })}
+                            value={bookForm.coverImage}
+                            onChange={(e) => setBookForm({ ...bookForm, coverImage: e.target.value })}
                             placeholder="https://picsum.photos/seed/placeholder/600/800"
                             className="w-full rounded-lg bg-zinc-900 border border-zinc-800 px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-amber-500 transition"
                         />
@@ -161,8 +164,8 @@ export default function AddOrEditEbookPage() {
                 <div className="space-y-1">
                     <label className="text-[10px] font-mono tracking-wider text-zinc-500 uppercase">Manuscript Chapters Content (Supports markdown style headers)</label>
                     <textarea
-                        value={bookForm.content}
-                        onChange={(e) => setBookForm({ ...bookForm, content: e.target.value })}
+                        value={bookForm.fullContent}
+                        onChange={(e) => setBookForm({ ...bookForm, fullContent: e.target.value })}
                         required
                         rows={6}
                         placeholder="# Chapter 1: The Ascent \n\nEntering the library vaults..."
