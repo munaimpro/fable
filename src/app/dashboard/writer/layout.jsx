@@ -33,7 +33,7 @@ export default function WriterDashboardLayout({ children }) {
         title: '',
         description: '',
         fullContent: '',
-        price: '9.99',
+        price: 9.99,
         genre: 'Fiction',
         coverImage: ''
     });
@@ -99,7 +99,7 @@ export default function WriterDashboardLayout({ children }) {
         return (
             <div className="flex flex-col min-h-screen bg-zinc-950 text-zinc-100 items-center justify-center p-4">
                 <div className="h-10 w-10 animate-spin rounded-full border-t-2 border-r-2 border-amber-500 border-solid" />
-                <p className="text-xs text-zinc-500 mt-4 font-mono">Loading Writer Workspace...</p>
+                <p className="text-xs text-zinc-500 mt-4 font-mono">Loading Writer Dashboard...</p>
             </div>
         );
     }
@@ -137,7 +137,7 @@ export default function WriterDashboardLayout({ children }) {
                             />
                             <div className="space-y-1">
                                 <span className="text-xs font-mono font-bold tracking-widest text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded uppercase leading-none mt-1">
-                                    AUTHOR PORTFOLIO
+                                    AUTHOR
                                 </span>
                                 <h1 className="text-2xl font-black text-white mt-1">{user?.name}</h1>
                                 <p className="text-xs text-zinc-400 font-sans">{user?.email}</p>

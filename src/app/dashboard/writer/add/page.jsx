@@ -23,7 +23,7 @@ export default function AddOrEditEbookPage() {
         title: '',
         description: '',
         fullContent: '',
-        price: '9.99',
+        price: 9.99,
         genre: 'Fiction',
         coverImage: ''
     };
@@ -38,7 +38,7 @@ export default function AddOrEditEbookPage() {
             title: '',
             description: '',
             fullContent: '',
-            price: '9.99',
+            price: 9.99,
             genre: 'Fiction',
             coverImage: ''
         });
@@ -60,7 +60,7 @@ export default function AddOrEditEbookPage() {
                 ...bookForm,
                 writerId: user.id,
                 writerName: user.name,
-                status: "unpublished",
+                ...(editingBookId ? {} : { status: "unpublished" })
             };
 
             console.log(payload)
@@ -135,9 +135,8 @@ export default function AddOrEditEbookPage() {
                             type="number"
                             step="0.01"
                             min="0.99"
-                            max="99.99"
                             value={bookForm.price}
-                            onChange={(e) => setBookForm({ ...bookForm, price: e.target.value })}
+                            onChange={(e) => setBookForm({ ...bookForm, price: Number(e.target.value) })}
                             required
                             className="w-full rounded-lg bg-zinc-900 border border-zinc-800 px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-amber-500 transition font-mono"
                         />

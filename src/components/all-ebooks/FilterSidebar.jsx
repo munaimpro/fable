@@ -113,7 +113,7 @@ export default function FilterSidebar({
                     <input
                         type="range"
                         min="0"
-                        max="50"
+                        max="999"
                         step="5"
                         value={maxPrice}
                         onChange={(e) =>

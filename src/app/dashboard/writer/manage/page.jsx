@@ -35,7 +35,7 @@ export default function ManageMyEbooksPage() {
             );
 
             if (response.ok) {
-                toast.success(`Ebook ${!book.published ? 'Published' : 'Unpublished'} successfully!`);
+                toast.success(`Ebook ${newStatus === "published" ? "Published" : "Unpublished"} successfully!`);
                 setMyEbooks(
                     myEbooks.map(b =>
                         b._id === book._id
@@ -79,7 +79,7 @@ export default function ManageMyEbooksPage() {
             title: book.title,
             description: book.description,
             fullContent: book.fullContent,
-            price: book.price.toString(),
+            price: book.price,
             genre: book.genre,
             coverImage: book.coverImage
         });

@@ -54,19 +54,17 @@ const AdminAnalyticsPage = () => {
             </div>
 
             
+            {/* Pie Chart and Line Chart */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
                 {/* CHART 1: Monthly Sales Line Chart */}
                 <div className="bg-zinc-950 border border-zinc-900 rounded-2xl p-5 sm:p-6 space-y-4">
                     <div className="flex items-center gap-2 text-left">
-                        {/* <LineChart className="w-5 h-5 text-amber-500" /> */}
                         <div>
                             <h4 className="text-sm font-bold text-white">Monthly Platform Sales</h4>
                             <p className="text-[10px] text-zinc-500 font-sans">Accumulated sales in USD across the past 7 calendar months.</p>
                         </div>
                     </div>
 
-                    {/* SVG GRAPH PLOTTER (Raw responsive math representation) */}
                     <div className="relative h-44 w-full pt-4">
                         <div className="h-[280px]">
                             <ResponsiveContainer width="100%" height="100%">
@@ -91,7 +89,6 @@ const AdminAnalyticsPage = () => {
                 {/* CHART 2: Genre Distribution Pie Chart */}
                 <div className="bg-zinc-950 border border-zinc-900 rounded-2xl p-5 sm:p-6 space-y-4">
                     <div className="flex items-center gap-2 text-left">
-                        {/* <PieChart className="w-5 h-5 text-amber-500" /> */}
                         <div>
                             <h4 className="text-sm font-bold text-white">Genre Breakdown Metrics</h4>
                             <p className="text-[10px] text-zinc-500 font-sans">Number of listed manuscripts cataloged per literary sub-genre.</p>
@@ -100,14 +97,10 @@ const AdminAnalyticsPage = () => {
                     <ResponsiveContainer width="100%" height={320}>
                         <PieChart>
                             <Pie
-                                // data={genreData.filter(item => item.count > 0)}
                                 data={genreData}
                                 dataKey="count"
                                 nameKey="genre"
                                 outerRadius={90}
-                                // label={({ genre }) =>
-                                //     `${genre}`
-                                // }
                             >
                                 {genreData.map((entry, index) => (
                                     <Cell
@@ -116,13 +109,11 @@ const AdminAnalyticsPage = () => {
                                     />
                                 ))}
                             </Pie>
-
                             <Tooltip />
                             <Legend />
                         </PieChart>
                     </ResponsiveContainer>
                 </div>
-
             </div>
         </div>
     );
