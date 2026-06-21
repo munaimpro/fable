@@ -2,16 +2,36 @@
 
 import React from 'react';
 import { useAdminDashboard } from '../layout';
-import { LineChart, PieChart } from 'lucide-react';
+import { CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const AdminAnalyticsPage = () => {
     const context = useAdminDashboard();
     const analytics = context?.analytics || null;
 
+    // Dashboard Metrix
     const activeMetrics = analytics?.metrics || { totalUsers: 0, totalWriters: 0, totalEbooksSold: 0, totalRevenue: 0 };
+
+    // Genre Data
     const genreData = analytics?.genreData || [
         { genre: 'Mystery', count: 0 }, { genre: 'Sci-Fi', count: 0 }, { genre: 'Romance', count: 0 },
         { genre: 'Fantasy', count: 0 }, { genre: 'Horror', count: 0 }, { genre: 'Fiction', count: 0 }
+    ];
+
+    // Monthly Sales
+    const monthlySales = analytics.monthlySales || [
+        { month: 'Jan', revenue: 0 }, { month: 'Feb', revenue: 0 }, { month: 'Mar', revenue: 0 }, { month: 'Apr', revenue: 0 }, { month: 'May', revenue: 0 }, { month: 'Jun', revenue: 0 }, { month: 'Jul', revenue: 0 }, { month: 'Aug', revenue: 0 }, { month: 'Sep', revenue: 0 }, { month: 'Oct', revenue: 0 }, { month: 'Nov', revenue: 0 }, { month: 'Dec', revenue: 0 }
+    ];
+
+    // Pie Chart Colors
+    const COLORS = [
+        '#f59e0b', // amber
+        '#06b6d4', // cyan
+        '#10b981', // emerald
+        '#8b5cf6', // violet
+        '#ef4444', // red
+        '#f97316', // orange
+        '#ec4899', // pink
+        '#84cc16', // lime
     ];
 
     return (
@@ -33,13 +53,13 @@ const AdminAnalyticsPage = () => {
                 ))}
             </div>
 
-            {/* Interactive SVG Charts segment - 2 Side by Side columns */}
+            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                {/* CHART 1: Monthly sales line chart mock */}
+                {/* CHART 1: Monthly Sales Line Chart */}
                 <div className="bg-zinc-950 border border-zinc-900 rounded-2xl p-5 sm:p-6 space-y-4">
                     <div className="flex items-center gap-2 text-left">
-                        <LineChart className="w-5 h-5 text-amber-500" />
+                        {/* <LineChart className="w-5 h-5 text-amber-500" /> */}
                         <div>
                             <h4 className="text-sm font-bold text-white">Monthly Platform Sales</h4>
                             <p className="text-[10px] text-zinc-500 font-sans">Accumulated sales in USD across the past 7 calendar months.</p>
@@ -48,92 +68,59 @@ const AdminAnalyticsPage = () => {
 
                     {/* SVG GRAPH PLOTTER (Raw responsive math representation) */}
                     <div className="relative h-44 w-full pt-4">
-                        <svg className="w-full h-full overflow-visible" viewBox="0 0 300 120">
-                            {/* Grids */}
-                            <line x1="20" y1="10" x2="280" y2="10" stroke="#1d1d20" strokeDasharray="3" />
-                            <line x1="20" y1="50" x2="280" y2="50" stroke="#1d1d20" strokeDasharray="3" />
-                            <line x1="20" y1="90" x2="280" y2="90" stroke="#1d1d20" />
+                        <div className="h-[280px]">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={monthlySales}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="month" />
+                                    <YAxis />
+                                    <Tooltip />
 
-                            {/* Labels */}
-                            <text x="5" y="14" fill="#52525b" fontSize="8" fontFamily="monospace">$40</text>
-                            <text x="5" y="54" fill="#52525b" fontSize="8" fontFamily="monospace">$20</text>
-                            <text x="5" y="94" fill="#52525b" fontSize="8" fontFamily="monospace">$0</text>
-
-                            {/* Area Gradient Glowing */}
-                            <path
-                                d="M20,90 L60,90 L100,90 L140,82 L180,90 L220,62 L260,35 L260,90 Z"
-                                fill="url(#grad)"
-                                opacity="0.15"
-                            />
-
-                            <defs>
-                                <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stopColor="#f59e0b" />
-                                    <stop offset="100%" stopColor="transparent" />
-                                </linearGradient>
-                            </defs>
-
-                            {/* Path Line */}
-                            <path
-                                d="M20,90 L60,90 L100,90 L140,82 L180,90 L220,62 L260,35"
-                                fill="none"
-                                stroke="#f59e0b"
-                                strokeWidth="2.5"
-                                strokeLinecap="round"
-                            />
-
-                            {/* Active Anchor nodes circles */}
-                            <circle cx="20" cy="90" r="3.5" fill="#18181b" stroke="#f59e0b" strokeWidth="2" />
-                            <circle cx="60" cy="90" r="3.5" fill="#18181b" stroke="#f59e0b" strokeWidth="2" />
-                            <circle cx="100" cy="90" r="3.5" fill="#18181b" stroke="#f59e0b" strokeWidth="2" />
-                            <circle cx="140" cy="82" r="3.5" fill="#18181b" stroke="#f59e0b" strokeWidth="2" />
-                            <circle cx="180" cy="90" r="3.5" fill="#18181b" stroke="#f59e0b" strokeWidth="2" />
-                            <circle cx="220" cy="62" r="3.5" fill="#18181b" stroke="#f59e0b" strokeWidth="2" />
-                            <circle cx="260" cy="35" r="4.5" fill="#f59e0b" />
-
-                            {/* Month Axis bottom tags */}
-                            {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'].map((m, index) => (
-                                <text key={index} x={20 + index * 40} y="110" fill="#71717a" fontSize="8" textAnchor="middle" fontFamily="monospace">
-                                    {m}
-                                </text>
-                            ))}
-                        </svg>
+                                    <Line
+                                        type="monotone"
+                                        dataKey="revenue"
+                                        stroke="#f59e0b"
+                                        strokeWidth={3}
+                                    />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
                     </div>
                 </div>
 
-                {/* CHART 2: Genre distribution horizontal bars donut */}
+                {/* CHART 2: Genre Distribution Pie Chart */}
                 <div className="bg-zinc-950 border border-zinc-900 rounded-2xl p-5 sm:p-6 space-y-4">
                     <div className="flex items-center gap-2 text-left">
-                        <PieChart className="w-5 h-5 text-amber-500" />
+                        {/* <PieChart className="w-5 h-5 text-amber-500" /> */}
                         <div>
                             <h4 className="text-sm font-bold text-white">Genre Breakdown Metrics</h4>
                             <p className="text-[10px] text-zinc-500 font-sans">Number of listed manuscripts cataloged per literary sub-genre.</p>
                         </div>
                     </div>
+                    <ResponsiveContainer width="100%" height={320}>
+                        <PieChart>
+                            <Pie
+                                // data={genreData.filter(item => item.count > 0)}
+                                data={genreData}
+                                dataKey="count"
+                                nameKey="genre"
+                                outerRadius={90}
+                                // label={({ genre }) =>
+                                //     `${genre}`
+                                // }
+                            >
+                                {genreData.map((entry, index) => (
+                                    <Cell
+                                        key={index}
+                                        fill={COLORS[index % COLORS.length]}
+                                    />
+                                ))}
+                            </Pie>
 
-                    {/* Horizontal grid rows bar mapping */}
-                    <div className="space-y-3 pt-2 text-left">
-                        {genreData.map((g, idx) => {
-                            const totalUnits = genreData.reduce((sum, entry) => sum + entry.count, 0) || 1;
-                            const pct = Math.round((g.count / totalUnits) * 100);
-                            return (
-                                <div key={idx} className="space-y-1 text-xs">
-                                    <div className="flex justify-between items-center text-zinc-400">
-                                        <span className="font-semibold text-zinc-300">{g.genre}</span>
-                                        <span className="font-mono text-zinc-500 font-normal">
-                                            {g.count} Book ({pct}%)
-                                        </span>
-                                    </div>
-                                    <div className="h-2 w-full rounded-full bg-zinc-900 overflow-hidden">
-                                        <div
-                                            style={{ width: `${pct}%` }}
-                                            className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full"
-                                        />
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
+                            <Tooltip />
+                            <Legend />
+                        </PieChart>
+                    </ResponsiveContainer>
                 </div>
 
             </div>
