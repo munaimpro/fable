@@ -29,12 +29,12 @@ export default function EbookDetails({ id }) {
             try {
                 setLoading(true);
                 setError(false);
-                const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${id}`);
-                if (!res.ok) {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${id}`);
+                if (!response.ok) {
                     setError(true);
                     return;
                 }
-                const data = await res.json();
+                const data = await response.json();
                 setBook(data);
 
                 // Check if user is logged in
@@ -100,7 +100,26 @@ export default function EbookDetails({ id }) {
             return;
         }
 
-        router.push(`/checkout/${id}`);
+        // router.push(`/checkout/${id}`);
+        const paymentData = {
+            ebookId: book?._id,
+            ebookTitle: book?.title,
+            totalAmount: book?.price,
+            quantity: 1
+        }
+
+        const response = await fetch("/api/checkout_sessions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(paymentData),
+        });
+        const data = await response.json();
+        console.log(data);
+        if (data?.url) {
+            window.location.href = data.url;
+        }
     };
 
     if (loading) {
