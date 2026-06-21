@@ -8,10 +8,10 @@ const AdminAnalyticsPage = () => {
     const context = useAdminDashboard();
     const analytics = context?.analytics || null;
 
-    const activeMetrics = analytics?.metrics || { totalUsers: 4, totalWriters: 2, totalEbooksSold: 1, totalRevenue: 39.99 };
+    const activeMetrics = analytics?.metrics || { totalUsers: 0, totalWriters: 0, totalEbooksSold: 0, totalRevenue: 0 };
     const genreData = analytics?.genreData || [
-        { genre: 'Mystery', count: 1 }, { genre: 'Sci-Fi', count: 1 }, { genre: 'Romance', count: 1 },
-        { genre: 'Fantasy', count: 1 }, { genre: 'Horror', count: 1 }, { genre: 'Fiction', count: 1 }
+        { genre: 'Mystery', count: 0 }, { genre: 'Sci-Fi', count: 0 }, { genre: 'Romance', count: 0 },
+        { genre: 'Fantasy', count: 0 }, { genre: 'Horror', count: 0 }, { genre: 'Fiction', count: 0 }
     ];
 
     return (

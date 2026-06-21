@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import HeroSlider from '@/components/HeroSlider';
-import FeaturedBooks from '@/components/FeaturedBooks';
-import GenresGrid from '@/components/GenresGrid';
-import TopWriters from '@/components/TopWriters';
+import HeroSlider from '@/components/home/HeroSlider';
+import FeaturedBooks from '@/components/home/FeaturedBooks';
+import GenresGrid from '@/components/home/GenresGrid';
+import TopWriters from '@/components/home/TopWriters';
 
 export default function Home() {
   const [ebooks, setEbooks] = useState([]);
