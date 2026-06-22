@@ -55,7 +55,7 @@ export default function AdminUsersPage() {
                                     </span>
                                 </td>
                                 <td className="p-4">
-                                    {item.id !== user?.id ? (
+                                    {item._id !== user?.id ? (
                                         <select
                                             value={item.role}
                                             onChange={(e) => handleUpdateRole(item._id, e.target.value)}
@@ -70,7 +70,7 @@ export default function AdminUsersPage() {
                                     )}
                                 </td>
                                 <td className="p-4 text-right">
-                                    {item.id !== user?.id ? (
+                                    {item._id !== user?.id ? (
                                         <button
                                             onClick={() => handleDeleteUser(item._id)}
                                             className="p-1.5 rounded-lg border border-zinc-850 hover:bg-rose-950/20 hover:text-rose-500 hover:border-rose-500/30 transition text-zinc-500"

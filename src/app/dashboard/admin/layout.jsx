@@ -30,7 +30,7 @@ export default function AdminDashboardLayout({ children }) {
 
     useEffect(() => {
         if (!user || user.role !== 'admin') {
-            toast.error('Forbidden. Administrative credentials required.');
+            // toast.error('Forbidden. Administrative credentials required.');
             router.push('/');
         }
     }, [user, router]);
@@ -225,7 +225,7 @@ export default function AdminDashboardLayout({ children }) {
                     {/* Admin Header Title Banner */}
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-zinc-900 pb-6 w-full">
                         <div className="space-y-1 text-center sm:text-left">
-                            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">Administrative Ledger</h1>
+                            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">Administrative Dashboard</h1>
                             <p className="text-xs text-zinc-500 font-sans">Full operational authority over Users, Publications, and Transaction receipts.</p>
                         </div>
                     </div>

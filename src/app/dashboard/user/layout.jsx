@@ -40,6 +40,7 @@ export default function UserDashboardLayout({ children }) {
         async function loadDashboardData() {
             setDataLoading(true);
             try {
+                // Getting bookmark data
                 const bookMarks = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookmarks/${user.id}`);
                 
                 // console.log(bookMarks);
@@ -50,9 +51,15 @@ export default function UserDashboardLayout({ children }) {
                     setBookmarks(bookMarksData);
                 }
 
-                const seededPurchaslist = [];
+                // Getting purchase data
+                const purchases = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/purchase-history/${user.id}`);
 
-                setPurchases(seededPurchaslist);
+                if (purchases.ok) {
+                    const purchasesData = await purchases.json();
+                    console.log(purchasesData);
+                    setPurchases(purchasesData);
+                }
+
             } catch (err) {
                 console.error('Loading user library stats failed:', err);
             } finally {
@@ -123,7 +130,7 @@ export default function UserDashboardLayout({ children }) {
                                         <button
                                             key={link.href}
                                             onClick={() => router.push(link.href)}
-                                            className={`w-full flex items-center gap-3 py-2.5 px-3 rounded-lg text-xs font-mono uppercase tracking-wider text-left transition ${isActive
+                                            className={`w-full flex items-center gap-3 py-2.5 px-3 rounded-lg text-xs font-mono cursor-pointer uppercase tracking-wider text-left transition ${isActive
                                                 ? 'border border-amber-500/20 bg-amber-500/10 text-amber-500 font-bold'
                                                 : 'border border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/55'
                                                 }`}

@@ -104,8 +104,11 @@ export default function EbookDetails({ id }) {
         const paymentData = {
             ebookId: book?._id,
             ebookTitle: book?.title,
+            coverImage: book?.coverImage,
             totalAmount: book?.price,
-            quantity: 1
+            quantity: 1,
+            writerId: book?.writerId,
+            writerName: book?.writerName
         }
 
         const response = await fetch("/api/checkout_sessions", {
@@ -151,7 +154,7 @@ export default function EbookDetails({ id }) {
     }
 
     const isAuthor = user?.id === book.writerId;
-    const isAvailable = book.status === 'available';
+    const isSold = book.totalSale > 0;
     const isUserAdmin = user?.role === 'admin';
     const purchasedSeeded = (user?.email === 'reader@fable.com' && book.id === 'b-5');
     const isUnlocked = isAuthor || isUserAdmin || purchasedSeeded || hasPurchased;
@@ -227,9 +230,9 @@ export default function EbookDetails({ id }) {
                                 </div>
                                 <div className="text-right">
                                     <p className="text-xs text-zinc-500 font-mono tracking-wider uppercase">Availability</p>
-                                    <span className={`inline-flex items-center gap-1 text-xs font-bold font-mono mt-1 ${isAvailable ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                    <span className={`inline-flex items-center gap-1 text-xs font-bold font-mono mt-1 ${isSold ? 'text-rose-400' : 'text-emerald-400'}`}>
                                         <CheckCircle className="w-4 h-4" />
-                                        {isAvailable ? 'In Stock' : 'Collectible Sold'}
+                                        {isSold ? 'Collectible Sold' : 'In Stock'}
                                     </span>
                                 </div>
                             </div>
@@ -240,10 +243,8 @@ export default function EbookDetails({ id }) {
                                     disabled={isAuthor}
                                     className={`col-span-4 rounded-xl py-3 px-4 text-xs font-bold shadow-lg transition flex items-center justify-center gap-2 cursor-pointer ${isAuthor
                                             ? 'bg-zinc-800 border border-zinc-700 text-zinc-500 cursor-not-allowed'
-                                            : isAvailable
-                                                ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-zinc-950 font-bold shadow-orange-500/5'
-                                                : 'bg-zinc-900 border border-zinc-800 text-zinc-400'
-                                        }`}
+                                            : isSold ? 'bg-zinc-900 border border-zinc-800 text-zinc-400'
+                                            : 'bg-linear-to-r from-amber-500 to-orange-600 text-zinc-950 font-bold shadow-orange-500/5'                                        }`}
                                 >
                                     {isAuthor ? (
                                         <>
@@ -295,7 +296,7 @@ export default function EbookDetails({ id }) {
                             </div>
                             <div className="max-w-3xl mx-auto leading-relaxed text-sm text-zinc-300 space-y-4 pt-4 overflow-y-auto max-h-[500px] border border-zinc-900 bg-zinc-950/80 p-6 rounded-2xl">
                                 <div className="whitespace-pre-line font-sans leading-relaxed text-zinc-200 text-left text-base">
-                                    {book.description}
+                                    {book.fullContent}
                                 </div>
                             </div>
                         </div>

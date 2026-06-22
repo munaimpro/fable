@@ -33,17 +33,17 @@ export default function SavedEbooksPage() {
                 </div>
             ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
-                    {purchases.map((pc) => (
-                        <div key={pc.id} className="group flex flex-col rounded-xl overflow-hidden border border-zinc-900 bg-zinc-950 hover:border-zinc-800 transition-colors">
+                    {purchases.map((purchase) => (
+                        <div key={purchase._id} className="group flex flex-col rounded-xl overflow-hidden border border-zinc-900 bg-zinc-950 hover:border-zinc-800 transition-colors">
                             <div className="aspect-[3/4] relative overflow-hidden bg-zinc-900">
                                 <img
-                                    src={pc.ebookCover}
-                                    alt={pc.ebookTitle}
+                                    src={purchase.coverImage}
+                                    alt={purchase.ebookTitle}
                                     className="h-full w-full object-cover group-hover:scale-102 transition duration-500"
                                 />
                                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4">
                                     <Link
-                                        href={`/ebook/${pc.ebookId}`}
+                                        href={`/ebook/${purchase.ebookId}`}
                                         className="rounded-lg bg-amber-500 text-zinc-950 text-xs font-bold px-3 py-1.5 flex items-center gap-1 hover:bg-amber-400 font-sans"
                                     >
                                         <span>Read Ebook</span>
@@ -52,8 +52,8 @@ export default function SavedEbooksPage() {
                                 </div>
                             </div>
                             <div className="p-3.5 space-y-1">
-                                <h4 className="text-xs font-bold text-white truncate">{pc.ebookTitle}</h4>
-                                <p className="text-[10px] text-zinc-500 truncate">By {pc.writerName}</p>
+                                <h4 className="text-xs font-bold text-white truncate">{purchase.ebookTitle}</h4>
+                                <p className="text-[10px] text-zinc-500 truncate">By {purchase.writerName}</p>
                             </div>
                         </div>
                     ))}

@@ -33,7 +33,7 @@ export default function RoyaltiesSalesPage() {
                         <tbody className="divide-y divide-zinc-900">
                             {sales.map((sale) => (
                                 <tr key={sale._id} className="hover:bg-zinc-900/30 text-zinc-300">
-                                    <td className="p-4 font-mono text-zinc-500">{sale.id}</td>
+                                    <td className="p-4 font-mono text-zinc-500">{sale._id}</td>
                                     <td className="p-4 font-bold text-white uppercase tracking-tight">{sale.ebookTitle}</td>
                                     <td className="p-4 font-semibold">{sale.buyerName}</td>
                                     <td className="p-4">{new Date(sale.createdAt).toLocaleDateString()}</td>

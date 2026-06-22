@@ -32,16 +32,16 @@ export default function PurchaseHistoryPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-zinc-900">
-                            {purchases.map((pc) => (
-                                <tr key={pc.id} className="hover:bg-zinc-900/30 text-zinc-300">
-                                    <td className="p-4 font-mono text-zinc-500 font-semibold">{pc.id}</td>
+                            {purchases.map((purchase) => (
+                                <tr key={purchase._id} className="hover:bg-zinc-900/30 text-zinc-300">
+                                    <td className="p-4 font-mono text-zinc-500 font-semibold">{purchase.transactionId}</td>
                                     <td className="p-4 font-bold text-white flex items-center gap-2">
-                                        <span className="truncate max-w-[150px]">{pc.ebookTitle}</span>
+                                        <span className="truncate max-w-37.5">{purchase.ebookTitle}</span>
                                     </td>
-                                    <td className="p-4">{pc.writerName}</td>
-                                    <td className="p-4 font-bold font-mono text-amber-500">${pc.price.toFixed(2)}</td>
-                                    <td className="p-4">{new Date(pc.createdAt).toLocaleDateString()}</td>
-                                    <td className="p-4 text-right font-semibold text-emerald-400 uppercase font-mono">Paid (Stripe)</td>
+                                    <td className="p-4">{purchase.writerName}</td>
+                                    <td className="p-4 font-bold font-mono text-amber-500">${purchase.price.toFixed(2)}</td>
+                                    <td className="p-4">{new Date(purchase.purchaseDate).toLocaleDateString()}</td>
+                                    <td className="p-4 text-right font-semibold text-emerald-400 uppercase font-mono">Paid</td>
                                 </tr>
                             ))}
                         </tbody>

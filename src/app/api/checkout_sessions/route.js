@@ -11,7 +11,7 @@ export async function POST(request) {
     const origin = headersList.get('origin')
     const user = await getUser();
     const body = await request.json();
-    // console.log(body);
+    console.log(body);
 
     // Create Checkout Sessions from body params.
     const session = await stripe.checkout.sessions.create({
@@ -29,11 +29,23 @@ export async function POST(request) {
           quantity: body?.quantity
         },
       ],
+      metadata: {
+        email: user?.email || "",
+        buyerId: user?.id || "",
+        buyerName: user?.name || "",
+        writerId: body?.writerId || "",
+        writerName: body?.writerName || "",
+        ebookId: body?.ebookId || "",
+        coverImage: body?.coverImage || "",
+        ebookTitle: body?.ebookTitle || "",
+        price: body?.totalAmount || "",
+        purchaseDate: new Date(),
+      },
       mode: 'payment',
       success_url: `${origin}/book-purchase-success?session_id={CHECKOUT_SESSION_ID}`,
     });
 
-    console.log(session); 
+    // console.log(session); 
 
     return NextResponse.json({url: session.url});
   } catch (err) {
