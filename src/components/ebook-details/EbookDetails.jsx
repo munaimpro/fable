@@ -25,6 +25,31 @@ export default function EbookDetails({ id }) {
     const [bookmarkLoading, setBookmarkLoading] = useState(false);
 
     useEffect(() => {
+        // Check if the user already purchased this book
+        const checkPurchaseHistory = async (ebookId) => {
+            try {
+                
+                console.log("checkPurchaseHistory called");
+                console.log("ebookId:", ebookId);
+                console.log("user:", user);
+
+                const purchaseResponse = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/purchase-check?ebookId=${ebookId}&buyerId=${user.id}`);
+
+                console.log('Book ID:', ebookId);
+                console.log('Buyer ID:', user?.id);
+                console.log("User:", user);
+
+                const data = await purchaseResponse.json();
+                console.log(data);
+
+                if (data.success) {
+                    setHasPurchased(data.purchased);
+                }
+            } catch (error) {
+                console.error('Purchase check failed:', error);
+            }
+        };
+        
         async function loadBookData() {
             try {
                 setLoading(true);
@@ -46,6 +71,10 @@ export default function EbookDetails({ id }) {
                         const bookMarks = await bookMarkResponse.json();
                         setIsBookmarked(bookMarks.some(bookmark => bookmark.ebookId === id));
                     }
+
+                    // 
+                    console.log(data._id);
+                    await checkPurchaseHistory(data._id);
                 }
             } catch (err) {
                 console.error('Loading ebook details failed:', err);
@@ -119,19 +148,116 @@ export default function EbookDetails({ id }) {
             body: JSON.stringify(paymentData),
         });
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         if (data?.url) {
             window.location.href = data.url;
         }
     };
 
+    // if (loading) {
+    //     return (
+    //         <div className="flex flex-col min-h-screen bg-zinc-950 text-zinc-100">
+    //             <div className="flex-grow flex flex-col items-center justify-center py-20 min-h-[400px]">
+    //                 <div className="h-10 w-10 animate-spin rounded-full border-t-2 border-r-2 border-amber-500 border-solid" />
+    //                 <p className="text-xs text-zinc-500 mt-4 font-mono">Unlocking Ebook Manuscript...</p>
+    //             </div>
+    //         </div>
+    //     );
+    // }
+
     if (loading) {
         return (
-            <div className="flex flex-col min-h-screen bg-zinc-950 text-zinc-100">
-                <div className="flex-grow flex flex-col items-center justify-center py-20 min-h-[400px]">
-                    <div className="h-10 w-10 animate-spin rounded-full border-t-2 border-r-2 border-amber-500 border-solid" />
-                    <p className="text-xs text-zinc-500 mt-4 font-mono">Unlocking Ebook Manuscript...</p>
+            <div className="flex flex-col min-h-screen bg-zinc-950 text-zinc-100 font-sans">
+                {/* Global Status/Loading Header with Animate-Spin indicator */}
+                <div className="sticky top-0 z-50 w-full border-b border-zinc-900/60 bg-zinc-950/80 backdrop-blur-md px-4 py-3 sm:px-6 lg:px-8">
+                    <div className="mx-auto max-w-7xl flex items-center justify-between">
+                        <div className="h-6 w-24 bg-zinc-900 rounded-md animate-pulse" />
+                        {/* <div className="flex items-center gap-3">
+                            <div className="h-4 w-4 animate-spin rounded-full border-t-2 border-r-2 border-amber-500 border-solid" />
+                            <span className="text-xs text-zinc-500 font-mono">Unlocking Ebook Manuscript...</span>
+                        </div> */}
+                    </div>
                 </div>
+
+                {/* Main Responsive Skeleton Layout */}
+                <main className="flex-grow mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 w-full space-y-12 animate-pulse">
+
+                    {/* Catalog Link Placeholder */}
+                    <div className="flex items-center gap-2">
+                        <div className="h-4 w-4 bg-zinc-900 rounded-full" />
+                        <div className="h-3.5 w-28 bg-zinc-900 rounded" />
+                    </div>
+
+                    {/* Details Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-14">
+
+                        {/* Column 1: Book Cover Frame Placeholder */}
+                        <div className="md:col-span-5 lg:col-span-4 justify-self-center w-full max-w-[280px] sm:max-w-[320px] md:max-w-none">
+                            <div className="aspect-[3/4] relative rounded-2xl border border-zinc-900 bg-zinc-900/55 shadow-xl shadow-black/40" />
+                        </div>
+
+                        {/* Column 2: Metadata & Synopsis Placeholder */}
+                        <div className="md:col-span-7 lg:col-span-8 flex flex-col justify-between space-y-6">
+
+                            <div className="space-y-4">
+                                {/* Genre tag and Date skeleton */}
+                                <div className="flex items-center gap-3">
+                                    <div className="h-7 w-24 bg-zinc-900/80 border border-zinc-800/40 rounded-full" />
+                                    <div className="h-4 w-32 bg-zinc-900/60 rounded" />
+                                </div>
+
+                                {/* Title & Author */}
+                                <div className="space-y-3">
+                                    <div className="h-9 w-3/4 bg-zinc-900 rounded-lg sm:h-11" />
+                                    <div className="h-4 w-1/4 bg-zinc-900/60 rounded" />
+                                </div>
+
+                                {/* Synopsis text block */}
+                                <div className="pt-6 border-t border-zinc-900/80 space-y-2">
+                                    <div className="h-3 w-16 bg-zinc-900/80 rounded mb-3" />
+                                    <div className="h-4 w-full bg-zinc-900/60 rounded" />
+                                    <div className="h-4 w-11/12 bg-zinc-900/60 rounded" />
+                                    <div className="h-4 w-4/5 bg-zinc-900/60 rounded" />
+                                </div>
+                            </div>
+
+                            {/* Transaction Action Box Skeleton */}
+                            <div className="rounded-2xl border border-zinc-900 bg-zinc-950 p-6 space-y-6 max-w-md">
+                                <div className="flex items-center justify-between">
+                                    <div className="space-y-2">
+                                        <div className="h-3 w-24 bg-zinc-900/80 rounded" />
+                                        <div className="h-7 w-20 bg-zinc-900 rounded" />
+                                    </div>
+                                    <div className="space-y-2 text-right">
+                                        <div className="h-3 w-16 bg-zinc-900/80 rounded ml-auto" />
+                                        <div className="h-4 w-28 bg-zinc-900 rounded ml-auto" />
+                                    </div>
+                                </div>
+
+                                {/* Button grid placeholder */}
+                                <div className="grid grid-cols-5 gap-3 pt-2">
+                                    <div className="col-span-4 h-11 bg-zinc-900 rounded-xl" />
+                                    <div className="col-span-1 h-11 bg-zinc-900 rounded-xl" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {/* Bottom Section: Full Reader Frame Skeleton */}
+                    <div className="border border-zinc-900 rounded-3xl bg-zinc-950/40 p-6 sm:p-10 space-y-6">
+                        <div className="space-y-2 border-b border-zinc-900 pb-4">
+                            <div className="h-4 w-36 bg-zinc-900/65 rounded" />
+                            <div className="h-5 w-48 bg-zinc-900 rounded" />
+                        </div>
+                        <div className="space-y-3 pt-4">
+                            <div className="h-4 w-full bg-zinc-900/60 rounded" />
+                            <div className="h-4 w-full bg-zinc-900/60 rounded" />
+                            <div className="h-4 w-11/12 bg-zinc-900/60 rounded" />
+                        </div>
+                    </div>
+
+                </main>
             </div>
         );
     }
@@ -156,8 +282,7 @@ export default function EbookDetails({ id }) {
     const isAuthor = user?.id === book.writerId;
     const isSold = book.totalSale > 0;
     const isUserAdmin = user?.role === 'admin';
-    const purchasedSeeded = (user?.email === 'reader@fable.com' && book.id === 'b-5');
-    const isUnlocked = isAuthor || isUserAdmin || purchasedSeeded || hasPurchased;
+    const isUnlocked = isAuthor || isUserAdmin || hasPurchased;
 
     return (
         <div className="flex flex-col min-h-screen bg-zinc-950 text-zinc-100 font-sans">
@@ -180,7 +305,7 @@ export default function EbookDetails({ id }) {
                                 className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
                                 referrerPolicy="no-referrer"
                             />
-                            {book.status === 'sold' && (
+                            {book.totalSale > 0 && (
                                 <div className="absolute top-4 right-4 z-10 rounded bg-red-950/90 border border-red-500/20 px-3 py-1 text-xs font-mono font-bold text-red-400 uppercase tracking-widest">
                                     Sold copy
                                 </div>
@@ -207,7 +332,11 @@ export default function EbookDetails({ id }) {
                                     {book.title}
                                 </h1>
                                 <p className="text-sm text-zinc-400">
-                                    By <span className="text-amber-500 hover:underline font-semibold cursor-pointer">{book.writerName}</span>
+                                    By <span className="text-amber-500 hover:underline font-semibold cursor-pointer">
+                                        <Link href={`/writer/${book.writerId}`}>
+                                            {book.writerName}
+                                        </Link>
+                                    </span>
                                 </p>
                             </div>
 
@@ -240,26 +369,27 @@ export default function EbookDetails({ id }) {
                             <div className="grid grid-cols-5 gap-3 pt-2">
                                 <button
                                     onClick={handleBuyNow}
-                                    disabled={isAuthor}
-                                    className={`col-span-4 rounded-xl py-3 px-4 text-xs font-bold shadow-lg transition flex items-center justify-center gap-2 cursor-pointer ${isAuthor
+                                    disabled={isAuthor || hasPurchased}
+                                    className={`col-span-4 rounded-xl py-3 px-4 text-xs font-bold shadow-lg transition flex items-center justify-center gap-2
+                                        ${isAuthor || hasPurchased
                                             ? 'bg-zinc-800 border border-zinc-700 text-zinc-500 cursor-not-allowed'
-                                            : isSold ? 'bg-zinc-900 border border-zinc-800 text-zinc-400'
-                                            : 'bg-linear-to-r from-amber-500 to-orange-600 text-zinc-950 font-bold shadow-orange-500/5'                                        }`}
+                                            : 'bg-linear-to-r from-amber-500 to-orange-600 text-zinc-950 font-bold shadow-orange-500/5 cursor-pointer'
+                                        }`}
                                 >
                                     {isAuthor ? (
                                         <>
                                             <Lock className="w-4 h-4" />
                                             <span>Author Copy (Disabled)</span>
                                         </>
-                                    ) : isAvailable ? (
+                                    ) : hasPurchased ? (
                                         <>
-                                            <DollarSign className="w-4 h-4" />
-                                            <span>Collect Edition</span>
+                                            <CheckCircle className="w-4 h-4" />
+                                            <span>Already Purchased</span>
                                         </>
                                     ) : (
                                         <>
-                                            <Lock className="w-4 h-4" />
-                                            <span>Acquired (Read Online)</span>
+                                            <DollarSign className="w-4 h-4" />
+                                            <span>Buy Now</span>
                                         </>
                                     )}
                                 </button>
@@ -290,9 +420,6 @@ export default function EbookDetails({ id }) {
                                     </span>
                                     <h2 className="text-xl font-bold text-white">Digital Codex Edition Reader</h2>
                                 </div>
-                                {purchasedSeeded && (
-                                    <span className="text-xs text-amber-500 font-mono">* Owned via seeded ledger</span>
-                                )}
                             </div>
                             <div className="max-w-3xl mx-auto leading-relaxed text-sm text-zinc-300 space-y-4 pt-4 overflow-y-auto max-h-[500px] border border-zinc-900 bg-zinc-950/80 p-6 rounded-2xl">
                                 <div className="whitespace-pre-line font-sans leading-relaxed text-zinc-200 text-left text-base">
