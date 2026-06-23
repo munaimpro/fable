@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 import { stripe } from '@/lib/stripe';
-import { authClient } from '@/lib/auth-client';
 import { getUser } from '@/lib/api/session';
 
 

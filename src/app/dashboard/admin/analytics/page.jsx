@@ -8,6 +8,14 @@ const AdminAnalyticsPage = () => {
     const context = useAdminDashboard();
     const analytics = context?.analytics || null;
 
+    if (!analytics) {
+        return (
+            <div className="flex items-center justify-center h-64">
+                Loading analytics...
+            </div>
+        );
+    }
+
     // Dashboard Metrix
     const activeMetrics = analytics?.metrics || { totalUsers: 0, totalWriters: 0, totalEbooksSold: 0, totalRevenue: 0 };
 
@@ -18,7 +26,7 @@ const AdminAnalyticsPage = () => {
     ];
 
     // Monthly Sales
-    const monthlySales = analytics.monthlySales || [
+    const monthlySales = analytics?.monthlySales || [
         { month: 'Jan', revenue: 0 }, { month: 'Feb', revenue: 0 }, { month: 'Mar', revenue: 0 }, { month: 'Apr', revenue: 0 }, { month: 'May', revenue: 0 }, { month: 'Jun', revenue: 0 }, { month: 'Jul', revenue: 0 }, { month: 'Aug', revenue: 0 }, { month: 'Sep', revenue: 0 }, { month: 'Oct', revenue: 0 }, { month: 'Nov', revenue: 0 }, { month: 'Dec', revenue: 0 }
     ];
 
