@@ -36,7 +36,7 @@ export default function RoyaltiesSalesPage() {
                                     <td className="p-4 font-mono text-zinc-500">{sale._id}</td>
                                     <td className="p-4 font-bold text-white uppercase tracking-tight">{sale.ebookTitle}</td>
                                     <td className="p-4 font-semibold">{sale.buyerName}</td>
-                                    <td className="p-4">{new Date(sale.createdAt).toLocaleDateString()}</td>
+                                    <td className="p-4">{new Date(sale.purchaseDate).toLocaleDateString()}</td>
                                     <td className="p-4 text-right font-bold font-mono text-amber-500">${sale.price}</td>
                                 </tr>
                             ))}

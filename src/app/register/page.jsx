@@ -6,7 +6,7 @@ import { BookOpen, Compass, AlertCircle, ArrowRight, Sparkles, User, PenTool, Im
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { authClient } from '@/lib/auth-client';
-import { uploadImage } from '../../utils/uploadImage';
+import { uploadImage } from '@/utils/uploadImage';
 
 const RegisterPage = () => {
     const router = useRouter();
@@ -39,8 +39,8 @@ const RegisterPage = () => {
         setError('');
     };
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
 
         setFormData({
             ...formData,
@@ -71,7 +71,6 @@ const RegisterPage = () => {
         const { name, email, image, password, confirmPassword, role } = formData;
 
         console.log("Image: ", image);
-        // return;
 
         if (!name || !email || !password || !confirmPassword) {
             toast.error('Please fill in all registration fields.');
@@ -212,7 +211,7 @@ const RegisterPage = () => {
                                 type="file"
                                 accept="image/*"
                                 name="image"
-                                onChange={handleImageChange}
+                                onChange={handleImageUpload}
                                 placeholder="https://i.ibb.co/..."
                                 className="w-full rounded-lg bg-zinc-900 border border-zinc-800 px-3.5 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-500 transition-colors"
                             />

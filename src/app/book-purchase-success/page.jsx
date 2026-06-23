@@ -150,7 +150,7 @@ export default async function PurchaseSuccess({ searchParams }) {
                   <span>Settlement Timestamp</span>
                 </span>
                 <span className="text-xs font-mono text-zinc-300">
-                  {session?.metadata?.purchaseDate || new Date().toLocaleDateString()}
+                  {new Date().toLocaleDateString()}
                 </span>
               </div>
 

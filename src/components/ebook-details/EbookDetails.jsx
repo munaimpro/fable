@@ -307,7 +307,7 @@ export default function EbookDetails({ id }) {
                             />
                             {book.totalSale > 0 && (
                                 <div className="absolute top-4 right-4 z-10 rounded bg-red-950/90 border border-red-500/20 px-3 py-1 text-xs font-mono font-bold text-red-400 uppercase tracking-widest">
-                                    Sold copy
+                                    Sold
                                 </div>
                             )}
                         </div>
@@ -393,17 +393,19 @@ export default function EbookDetails({ id }) {
                                         </>
                                     )}
                                 </button>
-
-                                <button
-                                    onClick={handleToggleBookmark}
-                                    disabled={bookmarkLoading}
-                                    className={`col-span-1 rounded-xl border flex items-center justify-center transition cursor-pointer ${isBookmarked
-                                            ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
-                                            : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:text-white'
-                                        }`}
-                                >
-                                    <Bookmark className={`w-4.5 h-4.5 ${isBookmarked ? 'fill-amber-500 stroke-amber-500' : ''}`} />
-                                </button>
+                                {!isUserAdmin && (   
+                                        <button
+                                            onClick={handleToggleBookmark}
+                                            disabled={bookmarkLoading}
+                                            className={`col-span-1 rounded-xl border flex items-center justify-center transition cursor-pointer ${isBookmarked
+                                                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                                                    : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:text-white'
+                                                }`}
+                                        >
+                                            <Bookmark className={`w-4.5 h-4.5 ${isBookmarked ? 'fill-amber-500 stroke-amber-500' : ''}`} />
+                                        </button>
+                                    )
+                                }    
                             </div>
                         </div>
                     </div>

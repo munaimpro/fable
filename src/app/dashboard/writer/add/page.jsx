@@ -5,6 +5,7 @@ import { useWriterDashboard } from '../layout';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
 import toast from 'react-hot-toast';
+import { uploadImage } from '@/utils/uploadImage';
 
 const GENRE_LIST = ['Fiction', 'Mystery', 'Romance', 'Sci-Fi', 'Fantasy', 'Horror'];
 
@@ -44,6 +45,15 @@ export default function AddOrEditEbookPage() {
         });
     };
 
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+
+        setBookForm({
+            ...bookForm,
+            coverImage: file
+        });
+    };
+
     // Submit book creation or modification
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -53,11 +63,18 @@ export default function AddOrEditEbookPage() {
         }
 
         try {
+            const imageFile = bookForm.coverImage;
+            console.log(imageFile);
+            const imageUrl = await uploadImage(imageFile);
+            console.log(imageUrl);
+            // return;
+
             const method = editingBookId ? 'PUT' : 'POST';
             const endpoint = editingBookId ? `${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${editingBookId}` : `${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/`;
 
             const payload = {
                 ...bookForm,
+                coverImage: imageUrl,
                 writerId: user.id,
                 writerName: user.name,
                 ...(editingBookId ? {} : { status: "unpublished" })
@@ -145,9 +162,9 @@ export default function AddOrEditEbookPage() {
                     <div className="space-y-1">
                         <label className="text-[10px] font-mono tracking-wider text-zinc-500 uppercase">Cover Art Thumbnail URL (Optional)</label>
                         <input
-                            type="url"
-                            value={bookForm.coverImage}
-                            onChange={(e) => setBookForm({ ...bookForm, coverImage: e.target.value })}
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
                             placeholder="https://picsum.photos/seed/placeholder/600/800"
                             className="w-full rounded-lg bg-zinc-900 border border-zinc-800 px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-amber-500 transition"
                         />
