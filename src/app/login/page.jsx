@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { BookOpen, Sparkles, AlertCircle, ArrowRight, Eye, EyeOff } from 'lucide-react';
@@ -9,6 +9,16 @@ import { authClient } from '@/lib/auth-client';
 
 const LoginPage = () => {
     const router = useRouter();
+
+    // Getting user data from session
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+
+    useEffect(() => {
+        if (user) {
+            router.push('/');
+        }
+    }, [user, router]);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -163,7 +173,7 @@ const LoginPage = () => {
                                 <div className="h-4.5 w-4.5 animate-spin rounded-full border-t-2 border-r-2 border-zinc-950 border-solid" />
                             ) : (
                                 <>
-                                    <span>Sign In Securely</span>
+                                    <span>Sign In</span>
                                     <ArrowRight className="w-4 h-4 text-zinc-950" />
                                 </>
                             )}

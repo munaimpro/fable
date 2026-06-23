@@ -73,7 +73,7 @@ export default function UserDashboardLayout({ children }) {
         return (
             <div className="flex flex-col min-h-screen bg-zinc-950 text-zinc-100 items-center justify-center p-4">
                 <div className="h-10 w-10 animate-spin rounded-full border-t-2 border-r-2 border-amber-500 border-solid" />
-                <p className="text-xs text-zinc-500 mt-4 font-mono">Opening Reader Lounge...</p>
+                <p className="text-xs text-zinc-500 mt-4 font-mono">Loading Reader Dashboard...</p>
             </div>
         );
     }
@@ -94,13 +94,13 @@ export default function UserDashboardLayout({ children }) {
                     <div className="flex flex-col sm:flex-row items-center gap-5 bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-900 rounded-3xl p-6 sm:p-8 justify-between">
                         <div className="flex items-center gap-4 text-center sm:text-left flex-col sm:flex-row">
                             <img
-                                src={user?.avatar || 'https://picsum.photos/seed/user/200'}
+                                src={user?.image || 'https://picsum.photos/seed/user/200'}
                                 alt={user?.name || 'Reader'}
                                 className="h-16 w-16 rounded-full object-cover ring-2 ring-amber-500/20"
                             />
                             <div className="space-y-1">
                                 <span className="text-xs font-mono font-bold tracking-widest text-amber-500 uppercase bg-amber-500/10 px-2 py-0.5 rounded leading-none">
-                                    READER COHORT
+                                    READER
                                 </span>
                                 <h1 className="text-2xl font-black text-white mt-1">{user?.name}</h1>
                                 <p className="text-xs text-zinc-400 font-sans">{user?.email}</p>

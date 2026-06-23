@@ -40,7 +40,7 @@ export default function AdminUsersPage() {
                         {userList.map((item) => (
                             <tr key={item._id} className="hover:bg-zinc-900/30 text-zinc-300">
                                 <td className="p-4">
-                                    <img src={item.image} alt={item.name} className="h-8 w-8 rounded-full object-cover border border-zinc-800" />
+                                    <img src={item.image || 'https://picsum.photos/seed/user/200'} alt={item.name} className="h-8 w-8 rounded-full object-cover border border-zinc-800" />
                                 </td>
                                 <td className="p-4 font-bold text-white">{item.name}</td>
                                 <td className="p-4 font-mono text-zinc-400">{item.email}</td>

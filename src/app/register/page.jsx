@@ -1,14 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { BookOpen, Compass, AlertCircle, ArrowRight, Sparkles, User, PenTool, ImageIcon } from 'lucide-react';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { authClient } from '@/lib/auth-client';
+import { uploadImage } from '../../utils/uploadImage';
 
 const RegisterPage = () => {
     const router = useRouter();
+    
+    // Getting user data from session
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+
+    useEffect(() => {
+        if (user) {
+            router.push('/');
+        }
+    }, [user, router]);
 
     // Form states
     const [formData, setFormData] = useState({
@@ -28,18 +39,39 @@ const RegisterPage = () => {
         setError('');
     };
 
-    console.log(formData.role);
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+
+        setFormData({
+            ...formData,
+            image: file
+        });
+    };
+
+    // console.log(formData.role);
 
     const handleRoleSelect = (role) => {
         setFormData({ ...formData, role });
         setError('');
-        console.log(formData.role);
+        // console.log(formData.role);
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log(formData);
+        
+        // Upload image to imagebb
+        const imageFile = formData.image;
+
+        console.log(imageFile);
+        
+        const imageUrl = await uploadImage(imageFile);
+        console.log(imageUrl);
 
         const { name, email, image, password, confirmPassword, role } = formData;
+
+        console.log("Image: ", image);
+        // return;
 
         if (!name || !email || !password || !confirmPassword) {
             toast.error('Please fill in all registration fields.');
@@ -57,7 +89,7 @@ const RegisterPage = () => {
             email,
             password,
             name,
-            image,
+            image: imageUrl,
             role,
             callbackURL: '/'
         });
@@ -175,12 +207,12 @@ const RegisterPage = () => {
 
                         {/* Photo URL Field */}
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-semibold text-zinc-400 uppercase tracking-widest font-mono">Profile Photo URL</label>
+                            <label className="text-[10px] font-semibold text-zinc-400 uppercase tracking-widest font-mono">Profile Photo</label>
                             <input
-                                type="url"
+                                type="file"
+                                accept="image/*"
                                 name="image"
-                                value={formData.image}
-                                onChange={handleChange}
+                                onChange={handleImageChange}
                                 placeholder="https://i.ibb.co/..."
                                 className="w-full rounded-lg bg-zinc-900 border border-zinc-800 px-3.5 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-500 transition-colors"
                             />
