@@ -6,7 +6,7 @@ import { Library, Edit, Trash2, BookOpen } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
-export default function ManageMyEbooksPage() {
+const ManageMyEbooksPage = () => {
     const router = useRouter();
     const context = useWriterDashboard();
     const myEbooks = context?.myEbooks || [];
@@ -93,7 +93,53 @@ export default function ManageMyEbooksPage() {
                 <p className="text-xs text-zinc-500">Enable, unpublish, or edit catalog listings inside Fable bookstore.</p>
             </div>
 
-            {myEbooks.length === 0 ? (
+            {context?.dataLoading ? (
+                <div className="overflow-x-auto rounded-xl border border-zinc-900 bg-zinc-950/40 animate-pulse">
+                    <table className="w-full text-left border-collapse min-w-[700px] text-xs">
+                        <thead>
+                            <tr className="border-b border-zinc-900 text-zinc-650 font-mono uppercase text-[9.5px] tracking-wider">
+                                <th className="p-4">Visual Cover</th>
+                                <th className="p-4">Book Title</th>
+                                <th className="p-4">Genre</th>
+                                <th className="p-4">Copy Price</th>
+                                <th className="p-4">Status</th>
+                                <th className="p-4">Listed Visibility</th>
+                                <th className="p-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-zinc-900">
+                            {Array.from({ length: 3 }).map((_, idx) => (
+                                <tr key={idx} className="text-zinc-305">
+                                    <td className="p-4">
+                                        <div className="h-10 w-7 rounded bg-zinc-900" />
+                                    </td>
+                                    <td className="p-4">
+                                        <div className="h-4 w-32 bg-zinc-900 rounded" />
+                                    </td>
+                                    <td className="p-4">
+                                        <div className="h-4.5 w-14 bg-zinc-900 rounded" />
+                                    </td>
+                                    <td className="p-4">
+                                        <div className="h-4 w-10 bg-zinc-900 rounded" />
+                                    </td>
+                                    <td className="p-4">
+                                        <div className="h-4 w-16 bg-zinc-900 rounded" />
+                                    </td>
+                                    <td className="p-4">
+                                        <div className="h-5 w-20 bg-zinc-900 rounded-full" />
+                                    </td>
+                                    <td className="p-4 text-right">
+                                        <div className="flex gap-2 justify-end">
+                                            <div className="h-7 w-7 rounded bg-zinc-900" />
+                                            <div className="h-7 w-7 rounded bg-zinc-900" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            ) : myEbooks.length === 0 ? (
                 <div className="text-center py-16 border border-dashed border-zinc-800 rounded-2xl bg-zinc-900/10 space-y-3">
                     <BookOpen className="w-8 h-8 text-zinc-700 mx-auto" />
                     <p className="text-xs text-zinc-400">You haven&apos;t listed any ebooks yet.</p>
@@ -135,8 +181,8 @@ export default function ManageMyEbooksPage() {
                                         <button
                                             onClick={() => handleTogglePublish(book)}
                                             className={`rounded-full px-2.5 py-0.5 text-[9.5px] font-mono font-bold uppercase border transition ${book.status === "published"
-                                                    ? "bg-emerald-950/40 text-emerald-400 border-emerald-500/20"
-                                                    : "bg-zinc-900 text-zinc-500 border-zinc-800"
+                                                ? "bg-emerald-950/40 text-emerald-400 border-emerald-500/20"
+                                                : "bg-zinc-900 text-zinc-500 border-zinc-800"
                                                 }`}
                                         >
                                             {book.status === "published"
@@ -171,3 +217,5 @@ export default function ManageMyEbooksPage() {
         </div>
     );
 }
+
+export default ManageMyEbooksPage;

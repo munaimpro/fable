@@ -3,9 +3,10 @@
 import React from 'react';
 import { useUserDashboard } from '../layout';
 
-export default function PurchaseHistoryPage() {
+const PurchaseHistoryPage = () => {
     const context = useUserDashboard();
     const purchases = context?.purchases || [];
+    const loading = context?.dataLoading;
 
     return (
         <div className="space-y-6 text-left">
@@ -14,7 +15,46 @@ export default function PurchaseHistoryPage() {
                 <p className="text-xs text-zinc-500 font-sans">Transactions processed via Stripe.</p>
             </div>
 
-            {purchases.length === 0 ? (
+            {loading ? (
+                <div className="overflow-x-auto rounded-xl border border-zinc-900 bg-zinc-950/40 animate-pulse">
+                    <table className="w-full text-left border-collapse min-w-[600px] text-xs">
+                        <thead>
+                            <tr className="border-b border-zinc-900 text-zinc-500 font-mono uppercase text-[9.5px] tracking-wider">
+                                <th className="p-4">Transaction ID</th>
+                                <th className="p-4">Ebook Details</th>
+                                <th className="p-4">Author</th>
+                                <th className="p-4">Amount Paid</th>
+                                <th className="p-4">Authorization Date</th>
+                                <th className="p-4 text-right">Status Code</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-zinc-900">
+                            {Array.from({ length: 3 }).map((_, idx) => (
+                                <tr key={idx} className="text-zinc-300">
+                                    <td className="p-4">
+                                        <div className="h-4 w-12 bg-zinc-900/80 rounded" />
+                                    </td>
+                                    <td className="p-4">
+                                        <div className="h-4 w-40 bg-zinc-900/80 rounded" />
+                                    </td>
+                                    <td className="p-4">
+                                        <div className="h-4 w-24 bg-zinc-900/80 rounded" />
+                                    </td>
+                                    <td className="p-4">
+                                        <div className="h-4 w-10 bg-zinc-900/80 rounded" />
+                                    </td>
+                                    <td className="p-4">
+                                        <div className="h-4 w-16 bg-zinc-900/80 rounded" />
+                                    </td>
+                                    <td className="p-4 text-right">
+                                        <div className="h-4 w-14 bg-zinc-900/80 rounded ml-auto" />
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            ) : purchases.length === 0 ? (
                 <div className="text-center py-16 border border-zinc-900 rounded-2xl bg-zinc-950">
                     <p className="text-xs text-zinc-500">No receipt items recorded.</p>
                 </div>
@@ -51,3 +91,5 @@ export default function PurchaseHistoryPage() {
         </div>
     );
 }
+
+export default PurchaseHistoryPage;
