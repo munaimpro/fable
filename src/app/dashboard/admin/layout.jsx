@@ -12,7 +12,7 @@ export function useAdminDashboard() {
     return useContext(AdminDashboardContext);
 }
 
-export default function AdminDashboardLayout({ children }) {
+const AdminDashboardLayout = ({ children }) => {
     const router = useRouter();
     const pathname = usePathname();
 
@@ -264,3 +264,5 @@ export default function AdminDashboardLayout({ children }) {
         </AdminDashboardContext.Provider>
     );
 }
+
+export default AdminDashboardLayout;

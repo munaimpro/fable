@@ -12,7 +12,7 @@ export function useUserDashboard() {
     return useContext(UserDashboardContext);
 }
 
-export default function UserDashboardLayout({ children }) {
+const UserDashboardLayout = ({ children }) => {
     const router = useRouter();
     const pathname = usePathname();
 
@@ -154,3 +154,5 @@ export default function UserDashboardLayout({ children }) {
         </UserDashboardContext.Provider>
     );
 }
+
+export default UserDashboardLayout;

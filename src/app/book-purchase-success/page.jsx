@@ -1,9 +1,12 @@
 import { stripe } from '@/lib/stripe'
 import { ArrowRight, BookOpen, Calendar, CheckCircle2, Compass, CreditCard, Hash, Mail, Sparkles, User } from 'lucide-react';
 import Link from 'next/link';
-import { redirect } from 'next/navigation'
 
-export default async function PurchaseSuccess({ searchParams }) {
+export const metadata = {
+  title: "Purchase Success | Fable"
+};
+
+const PurchaseSuccess = async ({ searchParams }) => {
   const { session_id } = await searchParams
     // console.log(session_id);
 
@@ -203,3 +206,5 @@ export default async function PurchaseSuccess({ searchParams }) {
     </div>
   );
 }
+
+export default PurchaseSuccess;

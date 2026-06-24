@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-export default function AdminDashboardHome() {
+const AdminDashboardHome = () => {
     const router = useRouter();
 
     useEffect(() => {
@@ -16,3 +16,5 @@ export default function AdminDashboardHome() {
         </div>
     );
 }
+
+export default AdminDashboardHome;

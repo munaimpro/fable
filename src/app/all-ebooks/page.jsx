@@ -1,7 +1,11 @@
 import BrowseContent from "@/components/all-ebooks/BrowseContent";
 import { Suspense } from "react";
 
-export default function AllEbooksPage() {
+export const metadata = {
+    title: "Ebooks | Fable"
+};
+
+const AllEbooksPage = () => {
     return (
         <div className="flex flex-col min-h-screen bg-zinc-950 text-zinc-100">
             <Suspense
@@ -19,3 +23,5 @@ export default function AllEbooksPage() {
         </div>
     );
 }
+
+export default AllEbooksPage;

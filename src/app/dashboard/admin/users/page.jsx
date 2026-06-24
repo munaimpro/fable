@@ -6,7 +6,7 @@ import { Trash2 } from 'lucide-react';
 import { authClient } from '@/lib/auth-client';
 
 const AdminUsersPage = () => {
-
+    
     // Getting user data from session
     const { data: session } = authClient.useSession();
     const user = session?.user;

@@ -12,7 +12,7 @@ export function useWriterDashboard() {
     return useContext(WriterDashboardContext);
 }
 
-export default function WriterDashboardLayout({ children }) {
+const WriterDashboardLayout = ({ children }) => {
     const router = useRouter();
     const pathname = usePathname();
 
@@ -193,3 +193,5 @@ export default function WriterDashboardLayout({ children }) {
         </WriterDashboardContext.Provider>
     );
 }
+
+export default WriterDashboardLayout;
