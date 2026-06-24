@@ -21,8 +21,6 @@ const UserDashboardLayout = ({ children }) => {
     const user = session?.user;
     // console.log(user);
 
-
-
     const [purchases, setPurchases] = useState([]);
     const [bookmarks, setBookmarks] = useState([]);
     const [dataLoading, setDataLoading] = useState(true);

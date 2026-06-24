@@ -14,7 +14,7 @@ export default function EbookCard({ book }) {
             className="flex flex-col rounded-xl overflow-hidden bg-zinc-950 border border-zinc-900/80 hover:border-zinc-800 transition-all duration-300 relative group h-full"
         >
             {/* Sold Badge */}
-            {book.status === "sold" && (
+            {book.totalSale > 0 && (
                 <div className="absolute top-2.5 right-2.5 z-10 rounded bg-red-950/90 border border-red-500/20 px-2 py-0.5 text-[9px] font-mono tracking-widest font-bold text-red-400 uppercase">
                     Sold copy
                 </div>

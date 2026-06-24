@@ -38,10 +38,22 @@ const WriterDashboardLayout = ({ children }) => {
         coverImage: ''
     });
 
+    // Writer login check
     useEffect(() => {
-        if (!user || (user.role !== 'writer' && user.role !== 'admin')) {
+        if (!user || (user.role !== 'writer')) {
             toast.error('Sign in with a Writer account to view this panel.');
             router.push('/login');
+        } else {
+            // Writer verification check
+            const writerVerificationCheck = async () => {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/verified-writers/${user.id || user._id}`);
+                const data = await response.json();
+                console.log(data);
+                if (!data.success) {
+                    router.push('/writer-verification');
+                }
+            }
+            writerVerificationCheck();
         }
     }, [user, router]);
 
@@ -108,7 +120,7 @@ const WriterDashboardLayout = ({ children }) => {
         { name: 'Manage My Ebooks', href: '/dashboard/writer/manage', icon: Library },
         { name: editingBookId ? 'Modify Book' : 'Add New Ebook', href: '/dashboard/writer/add', icon: Plus },
         { name: 'Royalties / Sales', href: '/dashboard/writer/sales', icon: DollarSign },
-        { name: 'Bookmarked List', href: '/dashboard/writer/bookmarks', icon: Heart },
+        { name: 'Bookmarked List', href: '/dashboard/writer/bookmarks', icon: Heart }
     ];
 
     return (
