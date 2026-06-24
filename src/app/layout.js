@@ -20,7 +20,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Fable - Digital Ebook Sharing Platform",
+  title: "Fable",
   description: "Digital Ebook Sharing Platform",
 };
 

@@ -369,9 +369,9 @@ export default function EbookDetails({ id }) {
                             <div className="grid grid-cols-5 gap-3 pt-2">
                                 <button
                                     onClick={handleBuyNow}
-                                    disabled={isAuthor || hasPurchased}
+                                    disabled={isAuthor || hasPurchased || isSold}
                                     className={`col-span-4 rounded-xl py-3 px-4 text-xs font-bold shadow-lg transition flex items-center justify-center gap-2
-                                        ${isAuthor || hasPurchased
+                                        ${isAuthor || hasPurchased || isSold
                                             ? 'bg-zinc-800 border border-zinc-700 text-zinc-500 cursor-not-allowed'
                                             : 'bg-linear-to-r from-amber-500 to-orange-600 text-zinc-950 font-bold shadow-orange-500/5 cursor-pointer'
                                         }`}
@@ -381,7 +381,7 @@ export default function EbookDetails({ id }) {
                                             <Lock className="w-4 h-4" />
                                             <span>Author Copy (Disabled)</span>
                                         </>
-                                    ) : hasPurchased ? (
+                                    ) : hasPurchased || isSold ? (
                                         <>
                                             <CheckCircle className="w-4 h-4" />
                                             <span>Already Purchased</span>
@@ -440,14 +440,19 @@ export default function EbookDetails({ id }) {
                                     This digital codex copy requires a purchase transaction. Unlock now to gain complete access.
                                 </p>
                             </div>
-                            <div className="pt-2">
-                                <button
-                                    onClick={handleBuyNow}
-                                    className="rounded-lg bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 text-xs font-semibold px-4 py-2 hover:border-zinc-700 transition cursor-pointer"
-                                >
-                                    Configure Transaction
-                                </button>
-                            </div>
+                                {
+                                    !isSold && (
+                                        <div className="pt-2">
+                                            <button
+                                                onClick={handleBuyNow}
+                                                className="rounded-lg bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 text-xs font-semibold px-4 py-2 hover:border-zinc-700 transition cursor-pointer"
+                                            >
+                                                Configure Transaction
+                                            </button>
+                                        </div>
+                                    )        
+                                }    
+                            
                         </div>
                     )}
                 </section>

@@ -74,7 +74,7 @@ const FeaturedBooks = ({ ebooks = [], loading }) => {
                                 className="flex flex-col rounded-xl overflow-hidden bg-zinc-900/20 border border-zinc-900/80 hover:border-zinc-800/80 transition-all duration-300 relative group h-full"
                             >
                                 {/* Badge */}
-                                {book.totalSales > 0 && (
+                                {book.totalSale > 0 && (
                                     <div className="absolute top-2 right-2 z-10 rounded bg-red-950/80 border border-red-500/30 px-2 py-0.5 text-[9px] font-mono tracking-widest font-bold text-red-400 uppercase">
                                         Sold out
                                     </div>

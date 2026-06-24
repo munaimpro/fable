@@ -64,10 +64,10 @@ export default async function PurchaseSuccess({ searchParams }) {
           <div className="space-y-1.5">
             <div className="inline-flex items-center gap-1 text-[10px] font-mono font-black tracking-widest text-amber-500 uppercase bg-amber-500/5 border border-amber-500/20 px-2.5 py-0.5 rounded-full">
               <Sparkles className="w-3 h-3 animate-spin duration-9000" />
-              <span>Acquisition Authorized</span>
+              <span>Access Authorized</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-              Digital Codex Unlocked
+              Payment Successful
             </h1>
             <p className="text-xs sm:text-sm text-zinc-400 max-w-sm mx-auto leading-relaxed">
               Your transactional ledger has been validated securely. The ebook manuscript is now added to your digital library.
@@ -107,7 +107,7 @@ export default async function PurchaseSuccess({ searchParams }) {
           <div className="md:col-span-7 p-6 sm:p-8 space-y-6 bg-zinc-950">
             <div>
               <h3 className="text-xs font-bold uppercase tracking-widest font-mono text-zinc-400 border-b border-zinc-900 pb-2">
-                Acquisition Registry
+                Purchase Details
               </h3>
             </div>
 
