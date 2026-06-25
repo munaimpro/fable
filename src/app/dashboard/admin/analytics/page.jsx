@@ -50,7 +50,7 @@ const AdminAnalyticsPage = () => {
                     { label: 'Total Registered Users', value: activeMetrics.totalUsers, color: 'text-amber-500' },
                     { label: 'Total Writers', value: activeMetrics.totalWriters, color: 'text-cyan-500' },
                     { label: 'Copies Sold', value: activeMetrics.totalEbooksSold, color: 'text-emerald-500' },
-                    { label: 'Gross Profits', value: `$${activeMetrics.totalRevenue}`, color: 'text-rose-500', isMono: true },
+                    { label: 'Gross Profits', value: `$${activeMetrics.totalRevenue.toFixed(2)}`, color: 'text-rose-500', isMono: true },
                 ].map((metric, idx) => (
                     <div key={idx} className="bg-zinc-950 border border-zinc-900 rounded-xl p-5 space-y-2">
                         <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase scale-90 origin-left">{metric.label}</p>
