@@ -77,14 +77,19 @@ export default function AddOrEditEbookPage() {
                 coverImage: imageUrl,
                 writerId: user.id,
                 writerName: user.name,
+                totalSale: 0,
                 ...(editingBookId ? {} : { status: "unpublished" })
             };
 
             console.log(payload)
 
+            const { data: tokenData } = await authClient.token();
             const res = await fetch(endpoint, {
                 method,
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${tokenData?.token}`
+                },
                 body: JSON.stringify(payload),
             });
 
@@ -200,7 +205,7 @@ export default function AddOrEditEbookPage() {
 
                 <button
                     type="submit"
-                    className="rounded-lg bg-gradient-to-r from-amber-500 to-orange-600 px-5 py-2.5 text-xs font-bold text-zinc-950 hover:opacity-95 shadow"
+                    className="cursor-pointer rounded-lg bg-gradient-to-r from-amber-500 to-orange-600 px-5 py-2.5 text-xs font-bold text-zinc-950 hover:opacity-95 shadow"
                 >
                     {editingBookId ? 'Save Manuscript edits' : 'Release Original Ebook'}
                 </button>

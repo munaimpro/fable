@@ -5,8 +5,13 @@ import { useWriterDashboard } from '../layout';
 import { Library, Edit, Trash2, BookOpen } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { authClient } from '@/lib/auth-client';
 
 const ManageMyEbooksPage = () => {
+    // Getting user data from session
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+    
     const router = useRouter();
     const context = useWriterDashboard();
     const myEbooks = context?.myEbooks || [];
@@ -21,12 +26,14 @@ const ManageMyEbooksPage = () => {
                 book.status === "published"
                     ? "unpublished"
                     : "published";
-
+            
+            const { data: tokenData } = await authClient.token();
             const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${book._id}`,
                 {
                     method: "PUT",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${tokenData?.token}`
                     },
                     body: JSON.stringify({
                         status: newStatus
@@ -60,7 +67,11 @@ const ManageMyEbooksPage = () => {
         if (!window.confirm('Are you sure you want to delete this book from Fable registry?')) return;
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${id}`, { method: 'DELETE' });
+            const { data: tokenData } = await authClient.token();
+            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${id}`, {
+                method: 'DELETE',
+                Authorization: `Bearer ${tokenData?.token}`
+            });
             if (response.ok) {
                 toast.success('Book deleted from registry.');
                 setMyEbooks(myEbooks.filter(b => b.id !== id));
@@ -89,7 +100,7 @@ const ManageMyEbooksPage = () => {
     return (
         <div className="space-y-6 text-left">
             <div className="space-y-1">
-                <h3 className="text-lg font-bold text-white">Your Listed Manuscripts</h3>
+                <h3 className="text-lg font-bold text-white">Listed Manuscripts</h3>
                 <p className="text-xs text-zinc-500">Enable, unpublish, or edit catalog listings inside Fable bookstore.</p>
             </div>
 
@@ -180,7 +191,7 @@ const ManageMyEbooksPage = () => {
                                     <td className="p-4">
                                         <button
                                             onClick={() => handleTogglePublish(book)}
-                                            className={`rounded-full px-2.5 py-0.5 text-[9.5px] font-mono font-bold uppercase border transition ${book.status === "published"
+                                            className={`cursor-pointer rounded-full px-2.5 py-0.5 text-[9.5px] font-mono font-bold uppercase border transition ${book.status === "published"
                                                 ? "bg-emerald-950/40 text-emerald-400 border-emerald-500/20"
                                                 : "bg-zinc-900 text-zinc-500 border-zinc-800"
                                                 }`}
@@ -194,14 +205,14 @@ const ManageMyEbooksPage = () => {
                                         <div className="flex gap-2 justify-end">
                                             <button
                                                 onClick={() => handleStartEdit(book)}
-                                                className="p-1.5 rounded bg-zinc-900 border border-zinc-800 hover:text-amber-500 transition"
+                                                className="p-1.5 cursor-pointer rounded bg-zinc-900 border border-zinc-800 hover:text-amber-500 transition"
                                                 aria-label={`Edit ${book.title}`}
                                             >
                                                 <Edit className="w-3.5 h-3.5" />
                                             </button>
                                             <button
                                                 onClick={() => handleDeleteBook(book._id)}
-                                                className="p-1.5 rounded bg-zinc-900 border border-zinc-800 hover:text-rose-500 transition"
+                                                className="p-1.5 cursor-pointer rounded bg-zinc-900 border border-zinc-800 hover:text-rose-500 transition"
                                                 aria-label={`Delete ${book.title}`}
                                             >
                                                 <Trash2 className="w-3.5 h-3.5" />

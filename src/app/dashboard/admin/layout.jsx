@@ -86,9 +86,13 @@ const AdminDashboardLayout = ({ children }) => {
     // Modify user role
     const handleUpdateRole = async (targetUserId, nextRole) => {
         try {
+            const { data: tokenData } = await authClient.token();
             const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${tokenData?.token}`
+                },
                 body: JSON.stringify({ userId: targetUserId, role: nextRole }),
             });
 
@@ -115,7 +119,14 @@ const AdminDashboardLayout = ({ children }) => {
         if (!window.confirm('Delete this user account permanently? This action is irreversible.')) return;
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/${targetUserId}`, { method: 'DELETE' });
+            const { data: tokenData } = await authClient.token();
+            console.log(tokenData);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/${targetUserId}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${tokenData?.token}`
+                }
+            });
             if (response.ok) {
                 toast.success('Account detached from registry.');
                 setUserList(userList.filter(u => u.id !== targetUserId));
@@ -137,9 +148,13 @@ const AdminDashboardLayout = ({ children }) => {
                     ? "unpublished"
                     : "published";
             
+            const { data: tokenData } = await authClient.token();
             const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${book._id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json', 
+                    Authorization: `Bearer ${tokenData?.token}`
+                },
                 body: JSON.stringify({
                     status: newStatus
                 }),
@@ -177,7 +192,13 @@ const AdminDashboardLayout = ({ children }) => {
         if (!window.confirm('Erase this book globally from Fable libraries?')) return;
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${bookId}`, { method: 'DELETE' });
+            const { data: tokenData } = await authClient.token();
+            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ebook/${bookId}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${tokenData?.token}`
+                }
+            });
             if (response.ok) {
                 toast.success('Ebook deleted.');
                 setBookList(bookList.filter(b => b.id !== bookId));
@@ -194,7 +215,7 @@ const AdminDashboardLayout = ({ children }) => {
         return (
             <div className="flex flex-col min-h-screen bg-zinc-950 text-zinc-100 items-center justify-center p-4">
                 <div className="h-10 w-10 animate-spin rounded-full border-t-2 border-r-2 border-amber-500 border-solid" />
-                <p className="text-xs text-zinc-500 mt-4 font-mono">Securing Fable admin panel...</p>
+                <p className="text-xs text-zinc-500 mt-4 font-mono">Loading Fable admin panel...</p>
             </div>
         );
     }

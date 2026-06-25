@@ -36,10 +36,12 @@ const WriterVerificationPage = () => {
     const handleStartVerification = async () => {
         setLoading(true);
         try {
+            const { data: tokenData } = await authClient.token();
             const response = await fetch('/api/checkout_sessions/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${tokenData?.token}`
                 },
                 body: JSON.stringify({
                     paymentType: 'verification'

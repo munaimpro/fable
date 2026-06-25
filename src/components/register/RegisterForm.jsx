@@ -183,7 +183,7 @@ const RegisterForm = () => {
                         onChange={handleChange}
                         placeholder="John Doe"
                         required
-                        className="w-full rounded-lg bg-zinc-900 border border-zinc-800 px-3.5 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-500 transition-colors"
+                        className="w-full rounded-lg bg-zinc-900 border border-zinc-800 px-3.5 py-2 text-sm text-zinc-100 focus:outline-none focus:border-amber-500 transition-colors cursor-pointer"
                     />
                 </div>
 

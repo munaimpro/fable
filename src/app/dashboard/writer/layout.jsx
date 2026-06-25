@@ -117,7 +117,7 @@ const WriterDashboardLayout = ({ children }) => {
     }
 
     const sidebarLinks = [
-        { name: 'Manage My Ebooks', href: '/dashboard/writer/manage', icon: Library },
+        { name: 'Manage Ebooks', href: '/dashboard/writer/manage', icon: Library },
         { name: editingBookId ? 'Modify Book' : 'Add New Ebook', href: '/dashboard/writer/add', icon: Plus },
         { name: 'Royalties / Sales', href: '/dashboard/writer/sales', icon: DollarSign },
         { name: 'Bookmarked List', href: '/dashboard/writer/bookmarks', icon: Heart }

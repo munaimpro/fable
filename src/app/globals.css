@@ -5,4 +5,7 @@
   --foreground: #171717;
 }
 
+button {
+  cursor: pointer !important
+}
 

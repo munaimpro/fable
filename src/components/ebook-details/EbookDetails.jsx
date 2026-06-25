@@ -96,9 +96,13 @@ export default function EbookDetails({ id }) {
 
         setBookmarkLoading(true);
         try {
+            const { data: tokenData } = await authClient.token();
             const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookmarks`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${tokenData?.token}`
+                },
                 body: JSON.stringify({ ebookId: id, userId: user.id }),
             });
 
@@ -139,7 +143,7 @@ export default function EbookDetails({ id }) {
             writerId: book?.writerId,
             writerName: book?.writerName
         }
-
+        
         const response = await fetch("/api/checkout_sessions", {
             method: "POST",
             headers: {
@@ -153,17 +157,6 @@ export default function EbookDetails({ id }) {
             window.location.href = data.url;
         }
     };
-
-    // if (loading) {
-    //     return (
-    //         <div className="flex flex-col min-h-screen bg-zinc-950 text-zinc-100">
-    //             <div className="flex-grow flex flex-col items-center justify-center py-20 min-h-[400px]">
-    //                 <div className="h-10 w-10 animate-spin rounded-full border-t-2 border-r-2 border-amber-500 border-solid" />
-    //                 <p className="text-xs text-zinc-500 mt-4 font-mono">Unlocking Ebook Manuscript...</p>
-    //             </div>
-    //         </div>
-    //     );
-    // }
 
     if (loading) {
         return (
@@ -361,7 +354,7 @@ export default function EbookDetails({ id }) {
                                     <p className="text-xs text-zinc-500 font-mono tracking-wider uppercase">Availability</p>
                                     <span className={`inline-flex items-center gap-1 text-xs font-bold font-mono mt-1 ${isSold ? 'text-rose-400' : 'text-emerald-400'}`}>
                                         <CheckCircle className="w-4 h-4" />
-                                        {isSold ? 'Collectible Sold' : 'In Stock'}
+                                        {isSold ? 'Sold' : 'In Stock'}
                                     </span>
                                 </div>
                             </div>
@@ -387,10 +380,17 @@ export default function EbookDetails({ id }) {
                                             <span>Already Purchased</span>
                                         </>
                                     ) : (
-                                        <>
-                                            <DollarSign className="w-4 h-4" />
-                                            <span>Buy Now</span>
-                                        </>
+                                        loading ? (
+                                            <>
+                                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-zinc-950 border-t-transparent" />
+                                                <span>Processing...</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <DollarSign className="w-4 h-4" />
+                                                <span>Buy Now</span>
+                                            </>        
+                                        )
                                     )}
                                 </button>
                                 {!isUserAdmin && (   
@@ -420,7 +420,7 @@ export default function EbookDetails({ id }) {
                                     <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded">
                                         Full Manuscript Unlocked
                                     </span>
-                                    <h2 className="text-xl font-bold text-white">Digital Codex Edition Reader</h2>
+                                    <h2 className="text-xl font-bold text-white">Digital Reader</h2>
                                 </div>
                             </div>
                             <div className="max-w-3xl mx-auto leading-relaxed text-sm text-zinc-300 space-y-4 pt-4 overflow-y-auto max-h-[500px] border border-zinc-900 bg-zinc-950/80 p-6 rounded-2xl">

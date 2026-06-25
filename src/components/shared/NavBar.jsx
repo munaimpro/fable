@@ -100,7 +100,7 @@ const NavBar = () => {
                                 </div>
                                 <button
                                     onClick={handleLogout}
-                                    className="flex items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-1.5 text-xs font-semibold text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900 transition-colors duration-200"
+                                    className="flex items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-1.5 text-xs font-semibold text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900 transition-colors duration-200 cursor-pointer"
                                 >
                                     <LogOut className="h-3.5 w-3.5" />
                                     Logout
