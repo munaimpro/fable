@@ -74,7 +74,7 @@ const ManageMyEbooksPage = () => {
             });
             if (response.ok) {
                 toast.success('Book deleted from registry.');
-                setMyEbooks(myEbooks.filter(b => b.id !== id));
+                setMyEbooks(myEbooks.filter(b => b._id !== id));
             } else {
                 toast.error('Delete action rejected.');
             }
